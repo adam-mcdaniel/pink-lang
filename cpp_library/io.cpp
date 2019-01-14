@@ -13,6 +13,13 @@ public:
         std::cout << a.get_data();
         return a;
     }
+
+    template<typename A, typename... Args>
+    auto call(A a, Args... args) {
+        this->call(a);
+        this->call(args...);
+        return a;
+    }
 };
 
 
@@ -21,6 +28,13 @@ public:
     template<typename A>
     auto call(A a) {
         std::cout << a.get_data() << std::endl;
+        return a;
+    }
+
+    template<typename A, typename... Args>
+    auto call(A a, Args... args) {
+        this->call(a);
+        this->call(args...);
         return a;
     }
 };

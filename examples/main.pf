@@ -1,0 +1,11 @@
+
+
+let debug = suffix.{
+    Print("=[ DEBUG ]===> ", suffix)
+}
+
+
+
+let main = {
+    Println("Hello world!")
+}

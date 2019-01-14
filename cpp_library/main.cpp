@@ -6,10 +6,25 @@
 #include "logic.cpp"
 using namespace std;
 
+class PrintFive : public Function {
+public:
+        template<typename __A__, typename __B__, typename __C__, typename __D__, typename __E__>
+        auto call(__A__ a, __B__ b, __C__ c, __D__ d, __E__ e) {
+                return Print().call(a, b, c, d, e);
+        }
+};
 
 class Main : public Function {
 public:
     Function call() {
+        PrintFive()
+            .call(
+                String("Test"),
+                String("ing"),
+                String(" "),
+                String("Hmm"),
+                String("\n")
+                );
 
         Assert()
             .call(
