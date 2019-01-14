@@ -43,7 +43,7 @@ public:
     }
 
     virtual bool operator==(Function f) {
-        return ((this->data == f.data) && (typeid(*this).name() == typeid(f).name()));
+        return this->data == f.data;
     }
 
     virtual bool operator!=(Function f) {
