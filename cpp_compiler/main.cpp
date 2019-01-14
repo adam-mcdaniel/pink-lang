@@ -162,11 +162,19 @@ vector<Token> tokenize(string script) {
 
 int main() {
 	// tokenize("test");
+	// cout << 
+	// 	FunctionDefinition("PrintFive",
+	// 		{Identifer("a"), Identifer("b"), Identifer("c"), Identifer("d"), Identifer("e")},
+	// 		FunctionCall("Print",
+	// 			{Identifer("a"), Identifer("b"), Identifer("c"), Identifer("d"), Identifer("e")}
+	// 			)
+	// 		)
+	// 			.str() << endl;
 	cout << 
-		FunctionDefinition("PrintFive",
-			{Identifer("a"), Identifer("b"), Identifer("c"), Identifer("d"), Identifer("e")},
-			FunctionCall("Print",
-				{Identifer("a"), Identifer("b"), Identifer("c"), Identifer("d"), Identifer("e")}
+		FunctionDefinition("Square",
+			{Identifer("a")},
+			FunctionCall("Mul",
+				{Identifer("a"), Identifer("a")}
 				)
 			)
 				.str() << endl;

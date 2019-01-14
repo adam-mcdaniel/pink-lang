@@ -14,6 +14,16 @@ public:
         }
 };
 
+
+class Square : public Function {
+public:
+        template<typename __A__>
+        auto call(__A__ a) {
+                return Mul().call(a, a);
+        }
+};
+
+
 class Main : public Function {
 public:
     Function call() {
@@ -25,6 +35,8 @@ public:
                 String("Hmm"),
                 String("\n")
                 );
+
+        Print().call(String("square: "), Square().call(Number(500)), String("\n"));
 
         Assert()
             .call(
