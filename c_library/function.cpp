@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <typeinfo>
 #include <string>
 #include "error.cpp"
 
