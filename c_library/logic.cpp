@@ -40,3 +40,17 @@ public:
         return a.call(b, c);
     }
 };
+
+
+class Assert : public Function {
+public:
+    template<typename A>
+    auto call(A a) {
+        if (a != True()) {
+            error("Assertion failed");
+            exit(1);
+        }
+        
+        return Function();
+    }
+};

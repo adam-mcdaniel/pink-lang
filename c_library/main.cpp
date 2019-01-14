@@ -11,6 +11,11 @@ class Main : public Function {
 public:
     Function call() {
 
+        Assert()
+            .call(
+                If().call(Identity().call(False()), False(), True())
+            );
+
         Debug().call(
             If().call(Identity().call(True()), String("Ok"), String("Not Ok"))
         );
