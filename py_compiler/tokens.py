@@ -68,7 +68,7 @@ class FunctionCall:
                 else:
                     result += str(token) + "(), "
             else:
-                result += str(token) + ", "
+                result += str(token) + "(), "
     
 
         if len(self.parameters) > 0:
@@ -88,6 +88,7 @@ class FunctionDefinition:
             self.body = None
 
     def in_scope(self, parameter_name):
+        # print(parameter_name, parameter_name in self.parameter_names)
         return parameter_name in self.parameter_names
 
     def __str__(self):
@@ -113,7 +114,8 @@ class FunctionDefinition:
             except: result += command.__str__() + ";\n\t\t"
     
         try: result += "return " + self.body[-1].__str__(self) + ";\n\t}\n};"
-        except: result += "return " + self.body[-1].__str__() + ";\n\t}\n};"
+        except:
+            result += "return " + self.body[-1].__str__() if self.in_scope(self.body[-1].__str__()) else self.body[-1].__str__() + "();\n\t}\n};"
         
         return result
 

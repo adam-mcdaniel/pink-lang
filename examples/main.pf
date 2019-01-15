@@ -1,9 +1,9 @@
-debug = suffix.(
-    Print["=[ DEBUG ]===> ", suffix, "\n"]
+
+Square = N.(
+    Mul[N, N]
 )
 
 
-
-main = (
-    Println["Hello world!"]
+main = path.(
+    For[30, Pipe[Println, Square], 1.000001]
 )

@@ -85,7 +85,8 @@ class Parser:
     def clear_current_token(self): self.current_token = ""
 
     def current_char(self): return self.script[self.current_index]
-    def next_char(self): return self.script[self.current_index]
+    def next_char(self): return self.script[self.current_index+1]
+    def last_char(self): return self.script[self.current_index-1]
     def next(self): self.current_index += 1
     def is_done(self): return self.current_index == len(self.script)-1
 
@@ -198,7 +199,7 @@ class Parser:
             elif self.current_char() is "\"":
                 self.start_string()
 
-            elif self.current_char() in separators and not self.in_string:
+            elif self.current_char() in separators and not self.in_string and not (self.current_char() == "." and self.last_char().isdigit()):
                 self.append_token()
                 self.add_char_to_token(
                     self.current_char()
@@ -214,30 +215,13 @@ class Parser:
             self.reduce()
             # print("REDUCED")
             # list(map(lambda t: print(":", str(t)), self.token_stack))
-
+        return '\n\n\n'.join(list(map(str, self.token_stack)))
         # list(map(lambda t: print(":", type(t), str(t)), self.token_stack))
         # print(self.token_stack)
 
-# Parser(
-# """
-# debug = suffix.(
-#     Print["=[ DEBUG ]===> ", suffix, "\\n"]
-# )
-
-
-
-# main = (
-#     Println["Hello world!"]
-# )
-# """
-# ).parse()
-# Parser(
-# """
-# Print["=[ DEBUG ]===> ", suffix, "\\n"]
-# """
-# ).parse()
-p = Parser(
-"""
+if __name__ == "__main__":
+    p = Parser(
+    """
 test = thing.(
     thing
 )
@@ -261,15 +245,7 @@ main = (
 
     Debug[f["a", "b"]]
 )
-"""
-)
+    """
+    )
 
-
-p.parse()
-# list(map(
-#     print, p.token_stack
-# ))
-# print(p.token_stack[1])
-for item in p.token_stack:
-    print(item)
-
+    print(p.parse())
