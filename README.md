@@ -5,13 +5,11 @@ A functional programming language that compiles to native
 
 The goal is to turn this:
 ```haskell
-let debug = suffix.{
+debug = suffix.{
     Print("=[ DEBUG ]===> ", suffix, "\n")
 }
 
-
-
-let main = {
+main = {
     Println("Hello world!")
 }
 ```

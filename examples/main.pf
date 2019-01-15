@@ -1,11 +1,11 @@
 
 
-let debug = suffix.{
+debug = suffix.{
     Print("=[ DEBUG ]===> ", suffix, "\n")
 }
 
 
 
-let main = {
+main = {
     Println("Hello world!")
 }
