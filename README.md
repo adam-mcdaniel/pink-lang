@@ -5,13 +5,13 @@ A functional programming language that compiles to native
 
 The goal is to turn this:
 ```haskell
-debug = suffix.{
-    Print("=[ DEBUG ]===> ", suffix, "\n")
-}
+debug = suffix.(
+    Print["=[ DEBUG ]===> ", suffix, "\n"]
+)
 
-main = {
-    Println("Hello world!")
-}
+main = (
+    Println["Hello world!"]
+)
 ```
 
 Into this:
@@ -19,15 +19,18 @@ Into this:
 ```c++
 class debug : public Function {
 public:
-        template<typename __A__>
-        auto call(__A__ suffix) {
-                return Print().call(String("=[ DEBUG ]===>"), suffix, String("\n"));
-        }
+	template<typename __A__>
+	auto call(__A__ suffix) {
+		return Print().call(String("=[ DEBUG ]===> "), suffix, String("\n"));
+	}
 };
-class main : public Function {
+
+
+class Main : public Function {
 public:
-        auto call() {
-                return Println().call(String("Hello world!"));
-        }
+	template<typename __A__>
+	auto call(__A__ path) {
+		return Println().call(String("Hello world!"));
+	}
 };
 ```

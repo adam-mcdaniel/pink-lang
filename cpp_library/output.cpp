@@ -9,11 +9,11 @@ using namespace std;
 
 
 
-class Square : public Function {
+class debug : public Function {
 public:
 	template<typename __A__>
-	auto call(__A__ N) {
-		return Mul().call(N, N);
+	auto call(__A__ suffix) {
+		return Print().call(String("=[ DEBUG ]===> "), suffix, String("\n"));
 	}
 };
 
@@ -22,7 +22,7 @@ class Main : public Function {
 public:
 	template<typename __A__>
 	auto call(__A__ path) {
-		return For().call(Number(30), Pipe().call(Println(), Square()), Number(1.000001));
+		return Println().call(String("Hello world!"));
 	}
 };
 
