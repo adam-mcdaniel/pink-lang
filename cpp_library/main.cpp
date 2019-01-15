@@ -107,29 +107,43 @@ using namespace std;
 //         return Function();
 //     }
 // };
-class Square : public Function {
+class test : public Function {
 public:
         template<typename __A__>
-        auto call(__A__ a) {
-                return Mul().call(a, a);
+        auto call(__A__ thing) {
+                return thing;
         }
 };
-class Test : public Function {
+class t : public Function {
+public:
+        template<typename __A__, typename __B__>
+        auto call(__A__ a, __B__ b) {
+                return a;
+        }
+};
+class f : public Function {
+public:
+        template<typename __A__, typename __B__>
+        auto call(__A__ a, __B__ b) {
+                return b;
+        }
+};
+class debug : public Function {
 public:
         template<typename __A__>
-        auto call(__A__ a) {
-                Print().call(String("Test"));
-                Println().call(String("ing"));
-                return Println().call(a);
+        auto call(__A__ suffix) {
+                return Print().call(String("=[ DEBUG ]===> "), suffix, String("\n"));
         }
 };
 class Main : public Function {
 public:
         template<typename __A__>
         auto call(__A__ path) {
-                return Test().call(Square().call(Number(1.25)));
+                Println().call(String("Hello world!"));
+                return Debug().call(f().call(String("a"), String("b")));
         }
 };
+
 
 int main() {
     Main().call(String("/"));

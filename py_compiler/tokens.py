@@ -109,9 +109,12 @@ class FunctionDefinition:
         
         result += ") {\n\t\t"
         for command in self.body[:-1]:
-            result += command.__str__(self) + ";\n\t\t"
+            try: result += command.__str__(self) + ";\n\t\t"
+            except: result += command.__str__() + ";\n\t\t"
     
-        result += "return " + self.body[-1].__str__(self) + ";\n\t}\n};"
+        try: result += "return " + self.body[-1].__str__(self) + ";\n\t}\n};"
+        except: result += "return " + self.body[-1].__str__() + ";\n\t}\n};"
+        
         return result
 
 
@@ -122,30 +125,30 @@ class Main(FunctionDefinition):
 
 data_types = [String, Number, FunctionCall]
 
-
-print(
-    FunctionDefinition(
-        Identifier("Square"), [Identifier("a")],
-            FunctionCall(Identifier("Mul"), [Identifier("a"), Identifier("a")])
+if __name__ == "__main__":
+    print(
+        FunctionDefinition(
+            Identifier("Square"), [Identifier("a")],
+                FunctionCall(Identifier("Mul"), [Identifier("a"), Identifier("a")])
+        )
     )
-)
 
 
-print(
-    FunctionDefinition(
-        Identifier("Test"), ["a"],
-            FunctionCall("Print", [String("Test")]),
-            FunctionCall("Println", [String("ing")]),
-            FunctionCall("Println", [Identifier("a")])
+    print(
+        FunctionDefinition(
+            Identifier("Test"), ["a"],
+                FunctionCall("Print", [String("Test")]),
+                FunctionCall("Println", [String("ing")]),
+                FunctionCall("Println", [Identifier("a")])
+        )
     )
-)
 
 
-print(
-    Main(
-        FunctionCall(
-            Identifier("Test"),
-            [FunctionCall(Identifier("Square"), [Number("1.25")])]
-            )
+    print(
+        Main(
+            FunctionCall(
+                Identifier("Test"),
+                [FunctionCall(Identifier("Square"), [Number("1.25")])]
+                )
+        )
     )
-)

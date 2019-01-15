@@ -1,11 +1,9 @@
-
-
-debug = suffix.{
-    Print("=[ DEBUG ]===> ", suffix, "\n")
-}
+debug = suffix.(
+    Print["=[ DEBUG ]===> ", suffix, "\n"]
+)
 
 
 
-main = {
-    Println("Hello world!")
-}
+main = (
+    Println["Hello world!"]
+)
