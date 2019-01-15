@@ -51,3 +51,6 @@ public:
         return !(*this == f);
     }
 };
+
+
+typedef Function None;

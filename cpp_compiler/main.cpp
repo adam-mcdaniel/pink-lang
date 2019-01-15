@@ -63,22 +63,36 @@ public:
 };
 
 
-class Identifer : public Token {
+class Identifier : public Token {
 public:
-	Identifer(string name) {
+	Identifier(string name) {
 		if (in(TEMPLATES, name)) {
 			error("Attempted to use reserved name '" + name +"' for Identifier");
 			exit(1);
 		}
+
 		this->name = name;
 		this->type = "Identifier";
 	}
 };
 
 
+Identifier NamedFunction(string name) {
+	return name + "()";
+}
+
+Identifier Number(string name) {
+	return "Number(" + name + ")";
+}
+
+Identifier String(string name) {
+	return "String(\"" + name + "\")";
+}
+
+
 class FunctionCall : public Token {
 public:
-	vector<Identifer> parameters;
+	vector<Identifier> parameters;
 
 	FunctionCall() {
 		this->name = "";
@@ -86,7 +100,7 @@ public:
 		this->parameters = {};
 	}
 
-	FunctionCall(string name, vector<Identifer> parameters) {
+	FunctionCall(string name, vector<Identifier> parameters) {
 		this->name = name;
 		this->type = "FunctionCall";
 		this->parameters = parameters;
@@ -105,8 +119,10 @@ public:
 		for (auto token : this->parameters) {
 			result += token.str() + ", ";
 		}
-		result.pop_back();
-		result.pop_back();
+		if (this->parameters.size() > 0) {
+			result.pop_back();
+			result.pop_back();
+		}
 		result += ")";
 		return result;
 	}
@@ -115,10 +131,18 @@ public:
 
 class FunctionDefinition : public Token {
 public:
-	vector<Identifer> parameters;
+	vector<Identifier> parameters;
 	FunctionCall body;
 
-	FunctionDefinition(string name, vector<Identifer> parameters, FunctionCall body) {
+	FunctionDefinition(string name, vector<Identifier> parameters) {
+		this->name = name;
+		this->parameters = parameters;
+		this->type = "FunctionDefinition";
+		// cout << "size: " << this->parameters.size() << endl;
+		// this->body = body;
+	}
+
+	FunctionDefinition(string name, vector<Identifier> parameters, FunctionCall body) {
 		this->name = name;
 		this->parameters = parameters;
 		this->type = "FunctionDefinition";
@@ -126,19 +150,30 @@ public:
 		this->body = body;
 	}
 
+	void add_body(FunctionCall body) {
+		this->body = body;
+	}
+
 	string str() {
-		string result = "class " + this->name + " : public Function {\npublic:\n\ttemplate<";
-		for (int i=0; i < this->parameters.size(); i++) {
-			result += "typename " + TEMPLATES[i] + ", ";
+		string result = "class " + this->name + " : public Function {\npublic:\n\t";
+		if (this->parameters.size() > 0) {
+			result += "template<";
+			for (int i=0; i < this->parameters.size(); i++) {
+				result += "typename " + TEMPLATES[i] + ", ";
+			}
+			result.pop_back();
+			result.pop_back();
+			result += ">\n\tauto call(";
+		} else {
+			result += "auto call(";
 		}
-		result.pop_back();
-		result.pop_back();
-		result += ">\n\tauto call(";
 		for (int i=0; i < this->parameters.size(); i++) {
 			result += TEMPLATES[i] + " " + this->parameters[i].str() + ", ";
 		}
-		result.pop_back();
-		result.pop_back();
+		if (this->parameters.size() > 0) {
+			result.pop_back();
+			result.pop_back();
+		}
 		result += ") {\n\t\treturn " + this->body.str() + ";\n\t}\n};";
 
 		return result;
@@ -164,20 +199,32 @@ int main() {
 	// tokenize("test");
 	// cout << 
 	// 	FunctionDefinition("PrintFive",
-	// 		{Identifer("a"), Identifer("b"), Identifer("c"), Identifer("d"), Identifer("e")},
+	// 		{Identifier("a"), Identifier("b"), Identifier("c"), Identifier("d"), Identifier("e")},
 	// 		FunctionCall("Print",
-	// 			{Identifer("a"), Identifer("b"), Identifer("c"), Identifer("d"), Identifer("e")}
+	// 			{Identifier("a"), Identifier("b"), Identifier("c"), Identifier("d"), Identifier("e")}
 	// 			)
 	// 		)
 	// 			.str() << endl;
 	cout << 
-		FunctionDefinition("Square",
-			{Identifer("a")},
-			FunctionCall("Mul",
-				{Identifer("a"), Identifer("a")}
+		FunctionDefinition("debug",
+			{Identifier("suffix")},
+			FunctionCall("Print",
+				{String("=[ DEBUG ]===>"), Identifier("suffix"), String("\\n")}
 				)
 			)
 				.str() << endl;
+	cout << 
+		FunctionDefinition("main",
+			{},
+			FunctionCall("Println",
+				{String("Hello world!")}
+				)
+			)
+				.str() << endl;
+
+	// cout << FunctionCall("Pipe",
+	// 		{NamedFunction("Println"), NamedFunction("Square"), Number("200")}
+	// 	).str() << endl;
 
 	return 0;
 }

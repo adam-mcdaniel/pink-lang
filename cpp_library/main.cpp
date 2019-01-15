@@ -17,24 +17,52 @@ public:
 
 class Square : public Function {
 public:
-        template<typename __A__>
-        auto call(__A__ a) {
-                return Mul().call(a, a);
+    template<typename __A__>
+    auto call(__A__ a) {
+        return Mul().call(a, a);
+    }
+};
+
+
+class Y : public Function {
+public:
+    template<typename __A__, typename __B__>
+    auto call(__A__ a, __B__ b) {
+        auto result = a.call(b);
+        while (true) {
+            result = a.call(result);
         }
+        return result;
+    }
+};
+
+
+class Pipe : public Function {
+public:
+    template<typename __A__, typename __B__, typename __C__>
+    auto call(__A__ a, __B__ b, __C__ c) {
+        return a.call(b.call(c));
+    }
 };
 
 
 class Main : public Function {
 public:
     Function call() {
-        PrintFive()
-            .call(
-                String("Test"),
-                String("ing"),
-                String(" "),
-                String("Hmm"),
-                String("\n")
-                );
+        // PrintFive()
+        //     .call(
+        //         String("Test"),
+        //         String("ing"),
+        //         String(" "),
+        //         String("Hmm"),
+        //         String("\n")
+        //         );
+
+        // Y().call(
+        //     Print(), String("Test")
+        //     );
+        Pipe().call(Println(), Square(), Number(200));
+        // Pipe().call(Print(), Square(), Number(100));
 
         Print().call(String("square: "), Square().call(Number(500)), String("\n"));
 
