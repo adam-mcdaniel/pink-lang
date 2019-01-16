@@ -1,0 +1,17 @@
+
+
+fib = n.(
+    If[
+        Less[n, 2],
+        1,
+        Add[
+            fib[Sub[n, 2]],
+            fib[Sub[n, 1]]
+        ]
+    ]
+)
+
+main = (
+    Println[fib[2]]
+)
+

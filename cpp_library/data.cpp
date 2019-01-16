@@ -51,14 +51,6 @@ public:
         error("Tried apply to a function of type Number");
         exit(1);
     }
-    
-    // virtual bool operator==(Number f) {
-    //     return this->get_number() == f.get_number();
-    // }
-
-    virtual bool operator==(Function f) {
-        return this->data == f.data;
-    }
 };
 
 
@@ -114,6 +106,7 @@ public:
 };
 
 
+
 class Bool : public Function {
 public:
     bool value;
@@ -147,3 +140,27 @@ Bool True() {
 Bool False() {
     return Bool(false);
 }
+
+
+class Less : public Function {
+public:
+    Number call(Number n, Number m) {
+        int a = n.get_number();
+        int b = m.get_number();
+        return Bool(
+            a < b
+        );
+    }
+};
+
+
+class Greater : public Function {
+public:
+    Number call(Number n, Number m) {
+        int a = n.get_number();
+        int b = m.get_number();
+        return Bool(
+            a > b
+        );
+    }
+};

@@ -2,7 +2,6 @@ Even = n.(
     Equals[Mod[n, 2], 0]
 )
 
-
 collatz = n.(
     Println["collatz: ", n]
 
