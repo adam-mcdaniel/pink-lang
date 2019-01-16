@@ -1,4 +1,5 @@
 from error import *
+from parse import *
 
 TEMPLATES = [
 	"__A__", "__B__",
@@ -16,13 +17,58 @@ TEMPLATES = [
 	"__Y__", "__Z__"
 ]
 
+class Equals:
+    def __str__(self, a=None): return "Equals"
+    def __eq__(self, a): return str(self) == str(a)
+
+
+class Dot:
+    def __str__(self, a=None): return "Dot"
+    def __eq__(self, a): return str(self) == str(a)
+
+
+class OpenBracket:
+    def __str__(self, a=None): return "OpenBracket"
+    def __eq__(self, a): return str(self) == str(a)
+
+
+class CloseBracket:
+    def __str__(self, a=None): return "CloseBracket"
+    def __eq__(self, a): return str(self) == str(a)
+
+
+class OpenCall:
+    def __str__(self, a=None): return "OpenCall"
+    def __eq__(self, a): return str(self) == str(a)
+
+
+class CloseCall:
+    def __str__(self, a=None): return "CloseCall"
+    def __eq__(self, a): return str(self) == str(a)
+
+
+class Comma:
+    def __str__(self, a=None): return "Comma"
+    def __eq__(self, a): return str(self) == str(a)
+
+
+operators = {
+    "=": Equals(),
+    ".": Dot(),
+    ",": Comma(),
+    "(": OpenBracket(),
+    ")": CloseBracket(),
+    "[": OpenCall(),
+    "]": CloseCall()
+}
+
 
 class String:
     def __init__(self, value):
         self.value = value
 
     def __eq__(self, a): return str(self) == a
-    def __str__(self): return "String(\"" + str(self.value) + "\")"
+    def __str__(self, a=None): return "String(\"" + str(self.value) + "\")"
 
 
 class Number:
@@ -30,7 +76,7 @@ class Number:
         self.value = value
 
     def __eq__(self, a): return str(self) == a
-    def __str__(self): return "Number(" + str(self.value) + ")"
+    def __str__(self, a=None): return "Number(" + str(self.value) + ")"
 
 
 class Identifier:
@@ -41,7 +87,7 @@ class Identifier:
             exit(1)
 
     def __eq__(self, a): return str(self) == a
-    def __str__(self): return self.name
+    def __str__(self, a=None): return self.name
 
 
 class FunctionCall:
@@ -50,26 +96,30 @@ class FunctionCall:
         self.parameters = parameters
 
     def __str__(self, fn_def_obj=None):
-        result = str(self.name)
+        if not fn_def_obj:
+            print(self.name, self.parameters)
+        result = self.name.__str__(fn_def_obj)
         if fn_def_obj:
-            if not fn_def_obj.in_scope(str(self.name)):
+            if not fn_def_obj.in_scope(self.name.__str__(fn_def_obj)) and result[-1] not in operators.keys():
                 result += "()"
-        else:
-            result += "()"
+        # else:
+        #     if result[-1] not in operators.keys():
+        #         result += "()"
+        #     # pass
 
         result += ".call("
         for token in self.parameters:
             if type(token) in data_types:
-                result += str(token) + ", "
+                result += token.__str__(fn_def_obj) + ", "
                 
             elif fn_def_obj:
-                if fn_def_obj.in_scope(str(token)):
-                    result += str(token) + ", "
+                if fn_def_obj.in_scope(token.__str__(fn_def_obj)):
+                    result += token.__str__(fn_def_obj) + ", "
                 else:
-                    result += str(token) + "(), "
+                    result += token.__str__(fn_def_obj) + "(), "
             else:
-                # result += str(token) + "(), "
-                result += str(token) + ", "
+                result += token.__str__(fn_def_obj) + "(), "
+                # result += token.__str__(fn_def_obj) + ", "
     
 
         if len(self.parameters) > 0:
@@ -92,7 +142,7 @@ class FunctionDefinition:
         # print(parameter_name, parameter_name in self.parameter_names)
         return parameter_name in self.parameter_names
 
-    def __str__(self):
+    def __str__(self, a=None):
         result = "class " + str(self.name) + " : public Function {\npublic:\n\t"
         if len(self.parameter_names) > 0:
             result += "template<"
@@ -116,7 +166,8 @@ class FunctionDefinition:
     
         try: result += "return " + self.body[-1].__str__(self) + ";\n\t}\n};"
         except:
-            result += "return " + self.body[-1].__str__() if self.in_scope(self.body[-1].__str__()) else self.body[-1].__str__() + "();\n\t}\n};"
+            # result += "return " + self.body[-1].__str__() if self.in_scope(self.body[-1].__str__()) else (self.body[-1].__str__() + "()") + ";\n\t}\n};"
+            result += "return " + self.body[-1].__str__() if self.in_scope(self.body[-1].__str__()) else self.body[-1].__str__() + ";\n\t}\n};"
         
         return result
 

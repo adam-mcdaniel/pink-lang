@@ -11,5 +11,5 @@ fib = n.(
 )
 
 main = (
-    fib[2]
+    fib[50]
 )

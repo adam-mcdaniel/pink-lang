@@ -1,6 +1,3 @@
-
-
-
 dyn = b.(
     If[b, "Hello world!", "1"]
 )

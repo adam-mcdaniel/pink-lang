@@ -8,8 +8,8 @@ using namespace std;
 
 class None : public Function {
 public:
-    Function call() {
-        return Function();
+    None() {
+        this->data = "None";
     }
 };
 
@@ -111,6 +111,7 @@ public:
         );
     }
 };
+
 
 
 class Bool : public Function {

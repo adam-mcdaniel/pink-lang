@@ -19,51 +19,6 @@ def find_first(l, t):
     return i
 
 
-class Equals:
-    def __str__(self): return "Equals"
-    def __eq__(self, a): return str(self) == str(a)
-
-
-class Dot:
-    def __str__(self): return "Dot"
-    def __eq__(self, a): return str(self) == str(a)
-
-
-class OpenBracket:
-    def __str__(self): return "OpenBracket"
-    def __eq__(self, a): return str(self) == str(a)
-
-
-class CloseBracket:
-    def __str__(self): return "CloseBracket"
-    def __eq__(self, a): return str(self) == str(a)
-
-
-class OpenCall:
-    def __str__(self): return "OpenCall"
-    def __eq__(self, a): return str(self) == str(a)
-
-
-class CloseCall:
-    def __str__(self): return "CloseCall"
-    def __eq__(self, a): return str(self) == str(a)
-
-
-class Comma:
-    def __str__(self): return "Comma"
-    def __eq__(self, a): return str(self) == str(a)
-
-
-operators = {
-    "=": Equals(),
-    ".": Dot(),
-    ",": Comma(),
-    "(": OpenBracket(),
-    ")": CloseBracket(),
-    "[": OpenCall(),
-    "]": CloseCall()
-}
-
 separators = ["\"", ","] + list(operators.keys())
 
 

@@ -44,7 +44,6 @@ public:
 
 
 bool BROKEN = false;
-
 class Break : public Function {
 public:
     template<typename A, typename B>

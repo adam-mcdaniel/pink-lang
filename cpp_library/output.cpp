@@ -9,11 +9,22 @@ using namespace std;
 
 
 
-class dyn : public Function {
+class Even : public Function {
 public:
 	template<typename __A__>
-	auto call(__A__ b) {
-		return If().call(b, String("Hello world!"), String("1"));
+	auto call(__A__ n) {
+		return Equals().call(Mod().call(n, Number(2)), Number(0));
+	}
+};
+
+
+class collatz : public Function {
+public:
+	template<typename __A__>
+	auto call(__A__ n) {
+		Println().call(String("collatz: "), n);
+		Break().call(Equals().call(n, Number(1)), n);
+		return If().call(Even().call(n), Div().call(n, Number(2)), Add().call(Mul().call(Number(3), n), Number(1)));
 	}
 };
 
@@ -22,12 +33,24 @@ class Main : public Function {
 public:
 	template<typename __A__>
 	auto call(__A__ path) {
-		return Println().call(dyn().call(True));
+		return Loop().call(collatz(), Number(10000));
 	}
 };
 
 
-int main() {
-    Main().call(String("/"));
+int main(int argc, char** argv) {
+    Pair args;
+    if (argc > 1) {
+        args = Pair().call(String(argv[argc-1]), None());
+        for (int i = argc-2; i > 0; --i) {
+            args = Pair().call(String(argv[i]), args);
+        }
+    } else {
+        cout << "no args" << endl;
+        args = Pair().call(None(), None());
+    }
+
+	Println().call(args);
+    Main().call(args);
     return 0;
 }
