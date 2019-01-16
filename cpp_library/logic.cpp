@@ -43,13 +43,27 @@ public:
 
 
 
-class Y : public Function {
+class Break : public Function {
+public:
+    string data = "Break";
+
+    template<typename A>
+    auto call(A a) {
+        return Broken(a);
+    }
+};
+
+
+class Loop : public Function {
 public:
     template<typename __A__, typename __B__>
     auto call(__A__ a, __B__ b) {
         auto result = a.call(b);
         while (true) {
             result = a.call(result);
+            if (result.data == "Broken") {
+                break;
+            }
         }
         return result;
     }

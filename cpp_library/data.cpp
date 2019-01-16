@@ -21,6 +21,10 @@ public:
     virtual bool operator==(String f) {
         return this->data == f.data;
     }
+
+    virtual bool operator==(Function f) {
+        return false;
+    }
 };
 
 
@@ -34,6 +38,11 @@ public:
         this->data = strs.str();
     }
 
+    Number(Function f) {
+        this->number = 0;
+        this->data = "";
+    }
+
     double get_number() {
         return this->number;
     }
@@ -43,8 +52,12 @@ public:
         exit(1);
     }
     
-    virtual bool operator==(Number f) {
-        return this->get_number() == f.get_number();
+    // virtual bool operator==(Number f) {
+    //     return this->get_number() == f.get_number();
+    // }
+
+    virtual bool operator==(Function f) {
+        return this->data == f.data;
     }
 };
 
@@ -89,6 +102,18 @@ public:
 };
 
 
+class Mod : public Function {
+public:
+    Number call(Number n, Number m) {
+        int a = n.get_number();
+        int b = m.get_number();
+        return Number(
+            a % b
+        );
+    }
+};
+
+
 class Bool : public Function {
 public:
     bool value;
@@ -105,8 +130,7 @@ public:
 
     template<typename A, typename B>
     auto call(A a, B b) {
-        if (this->value)
-            return a;
+        if (this->value) return a;
         else return b;
     }
 

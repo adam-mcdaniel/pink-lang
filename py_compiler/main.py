@@ -1,6 +1,6 @@
 import os
 import sys
-import parser
+import parse
 
 
 with open(sys.argv[1]) as f:
@@ -8,9 +8,9 @@ with open(sys.argv[1]) as f:
     f.close()
 
 
-output = parser.Parser(contents+"\n\n").parse()
+output = parse.Parser(contents+"\n\n").parse()
 
-with open("/home/adam/Desktop/pink-lang/cpp_library/output.cpp", 'w') as f:
+with open("C:/Users/Workstation/Documents/GitHub/pink-lang/cpp_library/output.cpp", 'w') as f:
     f.write(
 """
 #include <iostream>
@@ -29,4 +29,4 @@ int main() {
 }""")
     f.close()
 
-os.system('g++ "/home/adam/Desktop/pink-lang/cpp_library/output.cpp" -o /home/adam/Desktop/pink-lang/cpp_library/a.out')
+os.system('g++ --std=c++14 C:/Users/Workstation/Documents/GitHub/pink-lang/cpp_library/output.cpp -o C:/Users/Workstation/Documents/GitHub/pink-lang/cpp_library/a.exe')

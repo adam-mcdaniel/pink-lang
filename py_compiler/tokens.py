@@ -68,7 +68,8 @@ class FunctionCall:
                 else:
                     result += str(token) + "(), "
             else:
-                result += str(token) + "(), "
+                # result += str(token) + "(), "
+                result += str(token) + ", "
     
 
         if len(self.parameters) > 0:

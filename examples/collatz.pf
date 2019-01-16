@@ -1,0 +1,17 @@
+Even = n.(
+    Equals[Mod[n, 2], 0]
+)
+
+
+collatz = n.(
+    Println["collatz: ", n]
+    If[
+        NotEquals[n, 1],
+        If[Even[n], Div[n, 2], Add[Mul[3, n], 1]],
+        Break[n]
+    ]
+)
+
+main = (
+    Loop[collatz, 200]
+)
