@@ -1,0 +1,6 @@
+
+
+
+main = path.(
+    Println[path]
+)

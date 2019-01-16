@@ -1,8 +1,9 @@
-dyn = b.(
+
+f = b.(
     If[b, "Hello world!", "1"]
 )
 
 
 main = (
-    Println[dyn[True]]
+    Println[f[False]]
 )

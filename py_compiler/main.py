@@ -27,8 +27,8 @@ using namespace std;\n\n\n
 int main(int argc, char** argv) {
     Pair args;
     if (argc > 1) {
-        args = Pair().call(String(argv[argc]), None());
-        for (int i = argc-1; i > 0; --i) {
+        args = Pair().call(String(argv[argc-1]), None());
+        for (int i = argc-2; i > 0; --i) {
             args = Pair().call(String(argv[i]), args);
         }
     } else {
