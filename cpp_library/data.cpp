@@ -13,10 +13,10 @@ public:
         this->data = data;
     }
 
-    Function call(Function f) {
-        error("Tried apply to a function of type String");
-        exit(1);
-    }
+    // Function call(Function f) {
+    //     error("Tried apply to a function of type String");
+    //     exit(1);
+    // }
 
     virtual bool operator==(String f) {
         return this->data == f.data;
@@ -47,10 +47,15 @@ public:
         return this->number;
     }
 
-    Function call(Function f) {
-        error("Tried apply to a function of type Number");
-        exit(1);
-    }
+    // Function call(Function f) {
+    //     error("Tried apply to a function of type Number");
+    //     exit(1);
+    // }
+    // Number call(Function f) {
+    //     // error("Tried apply to a function of type Number");
+    //     // exit(1);
+    //     return 
+    // }
 };
 
 

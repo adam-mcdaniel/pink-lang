@@ -12,7 +12,7 @@ using namespace std;
 class fib : public Function {
 public:
 	template<typename __A__>
-	auto call(__A__ n) {
+	Number call(__A__ n) {
 		return If().call(Less().call(n, Number(2)), Number(1), Add().call(fib().call(Sub().call(n, Number(2))), fib().call(Sub().call(n, Number(1)))));
 	}
 };
