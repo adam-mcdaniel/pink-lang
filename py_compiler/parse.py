@@ -97,14 +97,14 @@ class Parser:
     def end_body(self): self.in_body = False
 
     def morph(self, token):
+        if self.in_string:
+            return String(token)
+
         try:
             float(token)
             return Number(token)
         except:
             pass
-
-        if self.in_string:
-            return String(token)
 
         if token in operators.keys():
             return operators[token]

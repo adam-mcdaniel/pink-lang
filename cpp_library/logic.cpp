@@ -2,6 +2,7 @@
 #include "function.cpp"
 #include "data.cpp"
 
+
 class Identity : public Function {
 public:
     template<typename A>
@@ -42,14 +43,16 @@ public:
 };
 
 
+bool BROKEN = false;
 
 class Break : public Function {
 public:
-    string data = "Break";
-
-    template<typename A>
-    auto call(A a) {
-        return Broken(a);
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        if (a.get_boolean()) {
+            BROKEN = true;
+        }
+        return b;
     }
 };
 
@@ -61,7 +64,8 @@ public:
         auto result = a.call(b);
         while (true) {
             result = a.call(result);
-            if (result.data == "Broken") {
+            if (BROKEN) {
+                BROKEN = false;
                 break;
             }
         }
@@ -85,6 +89,7 @@ class Piped : public Function {
         return this->a.call(this->b.call(c));
     }
 };
+
 
 class Pipe : public Function {
 public:

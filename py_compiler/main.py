@@ -10,7 +10,8 @@ with open(sys.argv[1]) as f:
 
 output = parse.Parser(contents+"\n\n").parse()
 
-with open("C:/Users/Workstation/Documents/GitHub/pink-lang/cpp_library/output.cpp", 'w') as f:
+cpp_library = "/Users/kiwi/Documents/pink-lang/cpp_library/"
+with open(cpp_library + "output.cpp", 'w') as f:
     f.write(
 """
 #include <iostream>
@@ -29,4 +30,4 @@ int main() {
 }""")
     f.close()
 
-os.system('g++ --std=c++14 C:/Users/Workstation/Documents/GitHub/pink-lang/cpp_library/output.cpp -o C:/Users/Workstation/Documents/GitHub/pink-lang/cpp_library/a.exe')
+os.system(f'g++ --std=c++14 {cpp_library}output.cpp -o {cpp_library}a.exe')

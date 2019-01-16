@@ -1,0 +1,13 @@
+test = a.b.(
+    Pair[a, b]
+)
+
+
+main = (
+    Println[
+        test[
+            "test",
+            "ing"
+            ]
+    ]
+)

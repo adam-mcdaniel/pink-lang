@@ -5,13 +5,11 @@ Even = n.(
 
 collatz = n.(
     Println["collatz: ", n]
-    If[
-        NotEquals[n, 1],
-        If[Even[n], Div[n, 2], Add[Mul[3, n], 1]],
-        Break[n]
-    ]
+    
+    Break[Equals[n, 1], n]
+    If[Even[n], Div[n, 2], Add[Mul[3, n], 1]]
 )
 
 main = (
-    Loop[collatz, 200]
+    Loop[collatz, 10000]
 )

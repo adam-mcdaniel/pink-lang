@@ -1,10 +1,28 @@
 #pragma once
 #include <iostream>
-#include <sstream>
 #include <string>
 #include "function.cpp"
 #include "error.cpp"
 using namespace std;
+
+
+class None : public Function {
+public:
+    Function call() {
+        return Function();
+    }
+};
+
+
+class Pair : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        this->pair = {a, b};
+        this->data = "(" + a.get_data() + ", " + b.get_data() + ")";
+        return *this;
+    }
+};
 
 
 class String : public Function {
@@ -13,24 +31,16 @@ public:
         this->data = data;
     }
 
-    Function call(Function f) {
+    template<typename A>
+    auto call(A f) {
         error("Tried apply to a function of type String");
         exit(1);
-    }
-
-    virtual bool operator==(String f) {
-        return this->data == f.data;
-    }
-
-    virtual bool operator==(Function f) {
-        return false;
     }
 };
 
 
 class Number : public Function {
 public:
-    double number;
     Number(double number) {
         this->number = number;
         ostringstream strs;
@@ -38,33 +48,18 @@ public:
         this->data = strs.str();
     }
 
-    Number(Function f) {
-        this->number = 0;
-        this->data = "";
-    }
-
-    double get_number() {
-        return this->number;
-    }
-
-    Function call(Function f) {
+    template<typename A>
+    auto call(A f) {
         error("Tried apply to a function of type Number");
         exit(1);
-    }
-    
-    // virtual bool operator==(Number f) {
-    //     return this->get_number() == f.get_number();
-    // }
-
-    virtual bool operator==(Function f) {
-        return this->data == f.data;
     }
 };
 
 
 class Add : public Function {
 public:
-    Number call(Number n, Number m) {
+    template<typename A, typename B>
+    auto call(A n, B m) {
         return Number(
             n.get_number() + m.get_number()
         );
@@ -74,7 +69,8 @@ public:
 
 class Sub : public Function {
 public:
-    Number call(Number n, Number m) {
+    template<typename A, typename B>
+    auto call(A n, B m) {
         return Number(
             n.get_number() - m.get_number()
         );
@@ -84,7 +80,8 @@ public:
 
 class Mul : public Function {
 public:
-    Number call(Number n, Number m) {
+    template<typename A, typename B>
+    auto call(A n, B m) {
         return Number(
             n.get_number() * m.get_number()
         );
@@ -94,7 +91,8 @@ public:
 
 class Div : public Function {
 public:
-    Number call(Number n, Number m) {
+    template<typename A, typename B>
+    auto call(A n, B m) {
         return Number(
             n.get_number() / m.get_number()
         );
@@ -104,7 +102,8 @@ public:
 
 class Mod : public Function {
 public:
-    Number call(Number n, Number m) {
+    template<typename A, typename B>
+    auto call(A n, B m) {
         int a = n.get_number();
         int b = m.get_number();
         return Number(
@@ -116,26 +115,14 @@ public:
 
 class Bool : public Function {
 public:
-    bool value;
-
-    Bool(bool value) {
-        this->value = value;
-        
-        if (this->value) {
-            this->data = "True";
-        } else {
-            this->data = "False";
-        }
+    Bool(bool boolean) {
+        this->boolean = boolean;
     }
 
     template<typename A, typename B>
     auto call(A a, B b) {
-        if (this->value) return a;
+        if (this->boolean) return a;
         else return b;
-    }
-
-    virtual bool operator==(Bool f) {
-        return this->value == f.value;
     }
 };
 
@@ -147,3 +134,48 @@ Bool True() {
 Bool False() {
     return Bool(false);
 }
+
+
+
+class Less : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        if (a.get_number() < b.get_number()) {
+            return True();
+        } else {
+            return False();
+        }
+    }
+};
+
+
+class Greater : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        if (a.get_number() > b.get_number()) {
+            return True();
+        } else {
+            return False();
+        }
+    }
+};
+
+
+class First : public Function {
+public:
+    template<typename A>
+    auto call(A a) {
+        return a.first();
+    }
+};
+
+
+class Second : public Function {
+public:
+    template<typename A>
+    auto call(A a) {
+        return a.second();
+    }
+};

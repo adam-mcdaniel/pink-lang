@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
 #include <typeinfo>
+#include <sstream>
 #include <string>
+#include <vector>
 #include "error.cpp"
 
 using namespace std;
@@ -9,7 +11,10 @@ using namespace std;
 
 class Function {
 public:
-    string data;
+    vector<Function> pair;
+    string data = "";
+    double number = 0;
+    bool boolean = false;
 
     Function() {
         this->data = "";
@@ -18,9 +23,47 @@ public:
     Function(string data) {
         this->data = data;
     }
+
+    template<typename A, typename B>
+    Function(A a, B b) {
+        this->pair = {a, b};
+        this->data = "(" + a.get_data() + ", " + b.get_data() + ")";
+    }
     
+    Function(double number) {
+        this->number = number;
+        ostringstream strs;
+        strs << number;
+        this->data = strs.str();
+    }
+    
+    Function(bool boolean) {
+        this->boolean = boolean;
+        if (boolean) {
+            this->data = "True";
+        } else {
+            this->data = "False";
+        }
+    }
+    
+    auto first() {
+        return this->pair[0];
+    }
+    
+    auto second() {
+        return this->pair[1];
+    }
+
     string get_data() {
         return this->data;
+    }
+    
+    double get_number() {
+        return this->number;
+    }
+    
+    bool get_boolean() {
+        return this->boolean;
     }
 
     virtual Function call() {
@@ -44,13 +87,10 @@ public:
     }
 
     virtual bool operator==(Function f) {
-        return this->data == f.data;
+        return this->data == f.data && this->number == f.number && this->boolean == f.boolean;
     }
 
     virtual bool operator!=(Function f) {
         return !(*this == f);
     }
 };
-
-
-typedef Function None;

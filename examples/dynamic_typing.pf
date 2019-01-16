@@ -1,0 +1,11 @@
+
+
+
+dyn = b.(
+    If[b, "Hello world!", "1"]
+)
+
+
+main = (
+    Println[dyn[True]]
+)

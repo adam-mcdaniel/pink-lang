@@ -1,0 +1,15 @@
+
+
+fib_part = p.(
+    Pair[Println[Second[p]], Add[First[p], Second[p]]]
+)
+
+fib = n.(
+    Second[
+        For[n, fib_part, Pair[0, 1]]
+        ]
+)
+
+main = (
+    fib[2]
+)
