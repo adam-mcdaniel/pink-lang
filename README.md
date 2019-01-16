@@ -1,4 +1,6 @@
 # pink-lang
+## WORK IN PROGRESS, DONT JUDGE :)
+
 A functional programming language that compiles to native
 
 ## The plan
