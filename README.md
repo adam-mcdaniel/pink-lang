@@ -109,7 +109,7 @@ class Put : public Function {
 public:
     template<typename A>
     auto call(A a) {
-		cout << a.get_data() << endl; // get data from a and print it
+	cout << a.get_data() << endl; // get data from a and print it
         return a;
     }
 };
