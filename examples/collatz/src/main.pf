@@ -1,41 +1,4 @@
 
-MakeError = s.(
-    Concat["=[ ERROR ]===> ", s]
-)
-
-IfError = c.s.(
-    Exit[c, 
-        Print[
-            If[
-                c,
-                Concat[MakeError[s], "\n"],
-                ""
-            ]
-        ]
-    ]
-)
-
-
-index = p.n.(
-    IfError[
-        GreaterEq[n, len[p]],
-        "Index out of bounds"
-    ]
-
-
-    Exit[GreaterEq[n, len[p]], 1]
-
-
-    First[
-        For[
-            n,
-            Second,
-            p
-        ]
-    ]
-)
-
-
 Even = n.(
     Eq[Mod[n, 2], 0]
 )
@@ -50,22 +13,22 @@ collatz = n.(
 
 
 main = args.(
-    IfError[
+    AssertExit[
         Less[len[args], 1]
         "No argument supplied"
     ]
 
-    IfError[
-        Not[IsNumber[index[args, 0]]]
+    AssertExit[
+        Not[IsNumber[Index[args, 0]]]
         "Argument must be an integer"
     ]
 
-    IfError[
-        Less[StrToNum[index[args, 0]], 1]
+    AssertExit[
+        Less[StrToNum[Index[args, 0]], 1]
         "Argument must be above 0"
     ]
 
     Loop[
-        collatz, StrToNum[index[args, 0]]
+        collatz, StrToNum[Index[args, 0]]
     ]
 )
