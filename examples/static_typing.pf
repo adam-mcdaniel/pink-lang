@@ -1,9 +1,0 @@
-
-f = b.(
-    If[b, "Hello world!", "1"]
-)
-
-
-main = (
-    Println[f[False]]
-)

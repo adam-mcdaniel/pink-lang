@@ -55,5 +55,6 @@
         "locale": "cpp",
         "memory": "cpp",
         "mutex": "cpp"
-    }
+    },
+    "python.linting.pylintEnabled": true
 }
