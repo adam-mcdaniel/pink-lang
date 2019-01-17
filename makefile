@@ -5,8 +5,8 @@ update:
 
 	@python3 -m pip install --upgrade pyinstaller 
 	@pyinstaller --onefile --clean --distpath $(path) src/compiler/pf.py 
-	@mkdir $(path)/include/std
-	@mkdir $(path)/target 
+	@mkdir -p $(path)/include/std
+	@mkdir -p $(path)/target 
 	@cp -r src/compiler/include/* $(path)/include 
 	@echo './pf; ./target/bin' > $(path)/run
 	@chmod +x $(path)/run
@@ -17,9 +17,10 @@ project:
 	@mkdir $(path) 
 	@python3 -m pip install --upgrade pyinstaller 
 	@pyinstaller --onefile --clean --distpath $(path) src/compiler/pf.py 
-	@mkdir $(path)/include 
-	@mkdir $(path)/src 
-	@mkdir $(path)/target 
+	@mkdir -p $(path)/include/std
+	@mkdir -p $(path)/src
+	@mkdir -p $(path)/target 
+
 	@cp -r src/compiler/include/* $(path)/include 
 	@echo 'main = args.(\n\tPrintln["Hello world!"]\n)' > $(path)/src/main.pf
 	@echo './pf; ./target/bin' > $(path)/run

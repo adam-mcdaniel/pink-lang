@@ -1,10 +1,10 @@
 
 #include <iostream>
-#include "../include/function.cpp"
-#include "../include/io.cpp"
-#include "../include/error.cpp"
-#include "../include/data.cpp"
-#include "../include/logic.cpp"
+#include "../include/std/function.cpp"
+#include "../include/std/io.cpp"
+#include "../include/std/error.cpp"
+#include "../include/std/data.cpp"
+#include "../include/std/logic.cpp"
 using namespace std;
 
 
@@ -33,9 +33,9 @@ class Main : public Function {
 public:
 	template<typename __A__>
 	auto call(__A__ args) {
-		AssertExit().call(Less().call(len().call(args), Number(1)), String("No argument supplied"));
-		AssertExit().call(Not().call(IsNumber().call(Index().call(args, Number(0)))), String("Argument must be an integer"));
-		AssertExit().call(Less().call(StrToNum().call(Index().call(args, Number(0))), Number(1)), String("Argument must be above 0"));
+		Assert().call(Less().call(len().call(args), Number(1)), String("No argument supplied"));
+		Assert().call(Not().call(IsNumber().call(Index().call(args, Number(0)))), String("Argument must be an integer"));
+		Assert().call(Less().call(StrToNum().call(Index().call(args, Number(0))), Number(1)), String("Argument must be above 0"));
 		return Loop().call(collatz(), StrToNum().call(Index().call(args, Number(0))));
 	}
 };
@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     Pair args;
     if (argc > 1) {
         args = Pair().call(String(argv[argc-1]), None());
-        for (int i = argc-2; i > 0; --i) {
+        for (int i = argc-2; i > 0; i--) {
             args = Pair().call(String(argv[i]), args);
         }
     } else {
