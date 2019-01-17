@@ -16,7 +16,7 @@ def check(err):
             b = line.find("was not declared")
             # print(line[a + len("error: "): b-a-len("error: ")])
             # print(line[a : b-a-len("error: ")])
-            print("\t\t'" + line[a + len("error: "): b][1:-2] + "' was not defined")
+            print("\t\t'" + line[a + len("error: "): b][1:-2] + "' is not defined")
         
         
         elif "error:" in line and " so a declaration of " in line:
@@ -24,7 +24,7 @@ def check(err):
             b = line.find(" must be available ")
             # print(line[a + len("error: "): b-a-len("error: ")])
             # print(line[a : b-a-len("error: ")])
-            print("\t\t'" + line[a + len(" so a declaration of "): b][1:-1] + "' was not defined")
+            print("\t\t'" + line[a + len(" so a declaration of "): b][1:-1] + "' is not defined")
         
         
         # elif "In member function ‘auto Main::call(__A__)’" in line:
@@ -34,3 +34,8 @@ def check(err):
             
             # print("In : ", end='')
             error("In '" + line[a + len("In member function ‘auto "): b] + "': ")
+
+    if len(error_message):
+        return True
+    else:
+        return False

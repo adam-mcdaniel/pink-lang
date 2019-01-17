@@ -1,4 +1,5 @@
 
+
 main = args.(
 	Println[
 		Index[args, 1]

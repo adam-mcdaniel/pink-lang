@@ -5,6 +5,7 @@ import error
 import check
 import subprocess
 
+
 try:
     with open("src/main.pf", "r") as f:
         contents = f.read()
@@ -84,4 +85,13 @@ process = subprocess.Popen(
 
 (out, err) = process.communicate()
 
-check.check(err)
+if "--verbose" in sys.argv:
+    print(
+        " ||   "+ "\n ||   ".join(str(err, "utf-8").split("\n"))
+        )
+
+
+if not check.check(err):
+    error.info("Program successfully compiled")
+else:
+    error.warning("Program could not be compiled due to errors")
