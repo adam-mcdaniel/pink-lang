@@ -24,7 +24,7 @@ index = p.n.(
 
 
     Exit[GreaterEq[n, len[p]], 1]
-
+    
 
     First[
         For[

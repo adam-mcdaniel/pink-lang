@@ -7,6 +7,7 @@ with open(sys.argv[1]) as f:
     contents = f.read()
     f.close()
 
+basename = os.path.splitext(os.path.basename(sys.argv[1]))[0]
 
 output = parse.Parser(contents+"\n\n").parse()
 
@@ -40,4 +41,4 @@ int main(int argc, char** argv) {
 }""")
     f.close()
 
-os.system(f'g++ --std=c++14 {cpp_library}output.cpp -o {cpp_library}a.exe')
+os.system(f'g++ --std=c++14 {cpp_library}output.cpp -o {cpp_library}{basename}.exe')

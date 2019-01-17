@@ -1,7 +1,4 @@
-test = suffix.(
-    Print["=[ DEBUG ]===> ", suffix, "\n"]
-)
 
 main = (
-    test["Hello world!"]
+    Println["Hello world!"]
 )
