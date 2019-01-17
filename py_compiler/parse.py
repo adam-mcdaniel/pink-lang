@@ -116,6 +116,11 @@ class Parser:
 
                         self.token_stack.append(
                             Main(
+
+                                list(map(str, list(filter(
+                                    lambda t: type(t) not in [Dot],
+                                    tokens[find_first(tokens, Equals)+1:find_first(tokens, OpenBracket)])))),
+
                                 *tokens[find_first(tokens, OpenBracket)+1:-1]
                             )
                         )

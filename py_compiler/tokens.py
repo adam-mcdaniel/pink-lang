@@ -173,8 +173,10 @@ class FunctionDefinition:
 
 
 class Main(FunctionDefinition):
-    def __init__(self, *body):
-        super().__init__(Identifier("Main"), ["path"], *body)
+    def __init__(self, args, *body):
+        if len(args) < 1:
+            args = ["args"]
+        super().__init__(Identifier("Main"), args, *body)
 
 
 data_types = [String, Number, FunctionCall]

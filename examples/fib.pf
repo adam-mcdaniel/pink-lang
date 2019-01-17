@@ -1,4 +1,40 @@
 
+MakeError = s.(
+    Concat["=[ ERROR ]===> ", s]
+)
+
+IfError = c.s.(
+    Exit[c, 
+        Print[
+            If[
+                c,
+                Concat[MakeError[s], "\n"],
+                ""
+            ]
+        ]
+    ]
+)
+
+
+index = p.n.(
+    IfError[
+        GreaterEq[n, len[p]],
+        "Index out of bounds"
+    ]
+
+
+    Exit[GreaterEq[n, len[p]], 1]
+
+
+    First[
+        For[
+            n,
+            Second,
+            p
+        ]
+    ]
+)
+
 
 fib_part = p.(
     Pair[Println[Second[p]], Add[First[p], Second[p]]]
@@ -10,6 +46,20 @@ fib = n.(
         ]
 )
 
-main = (
-    fib[50]
+
+
+main = args.(
+    IfError[
+        Less[len[args], 1]
+        "No argument supplied"
+    ]
+
+    IfError[
+        Not[IsNumber[index[args, 0]]]
+        "Argument must be an integer"
+    ]
+
+    fib[
+        StrToNum[index[args, 0]]
+    ]
 )

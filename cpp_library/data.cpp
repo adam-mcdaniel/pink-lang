@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <cerrno>
+#include <cstdlib>
 #include "function.cpp"
 #include "error.cpp"
 using namespace std;
@@ -33,8 +35,16 @@ public:
 
     template<typename A>
     auto call(A f) {
-        error("Tried apply to a function of type String");
-        exit(1);
+        return String(f.get_data());
+    }
+};
+
+
+class Concat : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        return String(a.get_data() + b.get_data());
     }
 };
 
@@ -50,8 +60,29 @@ public:
 
     template<typename A>
     auto call(A f) {
-        error("Tried apply to a function of type Number");
-        exit(1);
+        return Number(f.get_number());
+    }
+};
+
+
+class StrToNum : public Function {
+public:
+    template<typename A>
+    auto call(A a) {
+        try {
+            return Number(stod(a.get_data()));
+        } catch(std::invalid_argument) {
+            return Number(0);
+        }
+    }
+};
+
+
+class len : public Function {
+public:
+    template<typename A>
+    auto call(A a) {
+        return Number(a.length());
     }
 };
 
@@ -137,6 +168,48 @@ Bool False() {
 }
 
 
+bool __is_number__(string s) {
+    char* end = 0;
+    double val = strtod(s.c_str(), &end);
+    return end != s.c_str();
+}
+
+class IsNumber : public Function {
+public:
+    template<typename A>
+    auto call(A a) {
+        return Bool(__is_number__(a.get_data()));
+    }
+};
+
+
+class Not : public Function {
+public:
+    template<typename A>
+    auto call(A a) {
+        return Bool(!a.get_boolean());
+    }
+};
+
+
+class And : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        return Bool(a.get_boolean() && b.get_boolean());
+    }
+};
+
+
+class Or : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        return Bool(a.get_boolean() || b.get_boolean());
+    }
+};
+
+
 
 class Less : public Function {
 public:
@@ -156,6 +229,32 @@ public:
     template<typename A, typename B>
     auto call(A a, B b) {
         if (a.get_number() > b.get_number()) {
+            return True();
+        } else {
+            return False();
+        }
+    }
+};
+
+
+class LessEq : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        if (a.get_number() <= b.get_number()) {
+            return True();
+        } else {
+            return False();
+        }
+    }
+};
+
+
+class GreaterEq : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        if (a.get_number() >= b.get_number()) {
             return True();
         } else {
             return False();

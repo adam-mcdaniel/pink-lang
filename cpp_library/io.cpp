@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "error.cpp"
+#include "data.cpp"
 #include "function.cpp"
 
 
@@ -77,5 +78,18 @@ public:
     auto call(A a) {
         error(a.get_data());
         return a;
+    }
+};
+
+
+class Exit : public Function {
+public:
+    template<typename A, typename B>
+    auto call(A a, B b) {
+        if (a.get_boolean()) {
+            exit(b.get_number());
+        }
+
+        return b;
     }
 };

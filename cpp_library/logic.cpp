@@ -12,7 +12,7 @@ public:
 };
 
 
-class Equals : public Function {
+class Eq : public Function {
 public:
     template<typename A, typename B>
     auto call(A a, B b) {
@@ -25,7 +25,7 @@ public:
 };
 
 
-class NotEquals : public Function {
+class NotEq : public Function {
 public:
     template<typename A, typename B>
     auto call(A a, B b) {
@@ -101,12 +101,17 @@ public:
 
 class For : public Function {
 public:
-    template<typename __A__, typename __B__>
-    auto call(Number n, __A__ a, __B__ b) {
+    template<typename __A__, typename __B__, typename __C__>
+    auto call(__A__ a, __B__ b, __C__ c) {
         // return Piped<__A__, __B__>(a, b);
-        auto result = a.call(b);
-        for (int i=0; i < n.get_number(); i++) {
-            result = a.call(result);
+        auto result = b.call(c);
+
+        if (a.get_number() > 0) {
+            for (int i=0; i < a.get_number()-1; i++) {
+                result = b.call(result);
+            }
+        } else {
+            result = c;
         }
         return result;
     }

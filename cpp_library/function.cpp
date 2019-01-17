@@ -53,6 +53,13 @@ public:
     auto second() {
         return this->pair[1];
     }
+    
+    double length() {
+        if (this->pair.size() > 1) {
+            return this->second().length()+1;
+        }
+        return 0;
+    }
 
     string get_data() {
         return this->data;
