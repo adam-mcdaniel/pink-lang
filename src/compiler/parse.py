@@ -153,8 +153,13 @@ class Parser:
                 continue
             
 
-            if self.current_char() is "\"" and self.in_string:
+            if self.current_char() is "\"" and self.in_string and not self.last_char() == "\\":
                 self.append_token()
+
+            elif self.current_char() is "\"" and self.in_string and self.last_char() == "\\":
+                self.add_char_to_token(
+                    self.current_char()
+                )
 
             elif self.current_char() is "\"":
                 self.start_string()

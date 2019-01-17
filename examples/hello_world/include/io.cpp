@@ -41,6 +41,17 @@ public:
 };
 
 
+class Input : public Function {
+public:
+    template<typename A>
+    auto call(A a) {
+        Print().call(a);
+        string s;
+        getline (cin, s);
+        return String(s);
+    }
+};
+
 
 class Info : public Function {
 public:

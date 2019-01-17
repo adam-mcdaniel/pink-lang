@@ -1,0 +1,3 @@
+main = args.(
+	Print["You said: \"", Input["? "], "\"\n"]
+)

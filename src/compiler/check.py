@@ -1,10 +1,11 @@
 from error import error, warning
 
 def check(err):
-    warning("Errors found")
     error_message = str(err, "utf-8")
     # print(error_message)
-    
+    if len(error_message):
+        warning("Errors found")
+
     for line in error_message.split('\n'):
         # print("line: ", line)
         if "In member function ‘auto Main::call(__A__)’" in line:
