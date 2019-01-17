@@ -1,0 +1,19 @@
+Include["strings.cpp"]
+Import["test.pf"]
+
+
+print_index = n.(
+	Assert[
+		Not[Less[n, LenStr["testing"]]],
+		"Index out of bounds"
+		]
+
+	Print[n, ": '", IndexStr["testing", n], "'\n"]
+
+	Add[n, 1]
+)
+
+
+main = args.(
+	For[8, print_index, 0]
+)

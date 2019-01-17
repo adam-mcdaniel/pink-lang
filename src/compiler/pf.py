@@ -15,10 +15,13 @@ except:
     sys.exit(1)
 
 try:
-    output = parse.Parser(contents+"\n\n").parse()
-except:
+    output = parse.Parser(contents+"\n\n").parse_str()
+except Exception as e:
+    print(e)
     error.error("Could not compile: Syntax error")
     sys.exit(1)
+
+output = parse.Parser(contents+"\n\n").parse_str()
 
 try:
     include = "./include/"
@@ -26,11 +29,11 @@ try:
         f.write(
 """
 #include <iostream>
-#include "../include/function.cpp"
-#include "../include/io.cpp"
-#include "../include/error.cpp"
-#include "../include/data.cpp"
-#include "../include/logic.cpp"
+#include "../include/std/function.cpp"
+#include "../include/std/io.cpp"
+#include "../include/std/error.cpp"
+#include "../include/std/data.cpp"
+#include "../include/std/logic.cpp"
 using namespace std;\n\n\n
 """ + output + """
 
@@ -39,7 +42,7 @@ int main(int argc, char** argv) {
     Pair args;
     if (argc > 1) {
         args = Pair().call(String(argv[argc-1]), None());
-        for (int i = argc-2; i > 0; --i) {
+        for (int i = argc-2; i > 0; i--) {
             args = Pair().call(String(argv[i]), args);
         }
     } else {
@@ -64,9 +67,11 @@ process = subprocess.Popen(
 (out, err) = process.communicate()
 
 if "--verbose" in sys.argv:
-    print(
-        " ||   "+ "\n ||   ".join(str(err, "utf-8").split("\n"))
-        )
+    error = str(err, "utf-8")
+    if len(error):
+        print(
+            " ||   "+ "\n ||   ".join(error.split("\n"))
+            )
 
 
 if not check.check(err):

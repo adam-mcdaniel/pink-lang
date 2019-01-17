@@ -1,0 +1,3 @@
+Test = none.(
+    Println["It worked!"]
+)

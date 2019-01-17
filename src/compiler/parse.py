@@ -3,25 +3,6 @@ from error import *
 from tokens import *
 
 
-def find_last_comma(l):
-    i = -1
-    for j, item in enumerate(l):
-        if Comma == type(item):
-            i = j
-
-    return i
-
-def find_first(l, t):
-    i = -1
-    for j, item in enumerate(l):
-        if t == type(item):
-            i = j
-    return i
-
-
-separators = ["\"", ","] + list(operators.keys())
-
-
 class Parser:
     def __init__(self, script):
         self.script = script
@@ -97,7 +78,27 @@ class Parser:
                 )
 
                 if self.reducable(tokens):
-                    if CloseCall() == tokens[-1]:
+                    if Identifier("Include") in tokens and CloseCall() == tokens[-1]:
+                        for token in tokens[:find_first(tokens, OpenCall)-1]:
+                            self.token_stack.append(token)
+
+                        self.token_stack.append(
+                            Include(
+                                tokens[find_first(tokens, OpenCall)+1].value
+                            )
+                        )
+
+                    elif Identifier("Import") in tokens and CloseCall() == tokens[-1]:
+                        for token in tokens[:find_first(tokens, OpenCall)-1]:
+                            self.token_stack.append(token)
+
+                        self.token_stack.append(
+                            Import(
+                                tokens[find_first(tokens, OpenCall)+1].value
+                            )
+                        )
+
+                    elif CloseCall() == tokens[-1]:
                         for token in tokens[:find_first(tokens, OpenCall)-1]:
                             self.token_stack.append(token)
 
@@ -178,11 +179,11 @@ class Parser:
 
             self.next()
             self.reduce()
-            # print("REDUCED")
-            # list(map(lambda t: print(":", str(t)), self.token_stack))
-        return '\n\n\n'.join(list(map(str, self.token_stack)))
-        # list(map(lambda t: print(":", type(t), str(t)), self.token_stack))
-        # print(self.token_stack)
+
+        return self.token_stack
+
+    def parse_str(self):
+        return '\n\n\n'.join(list(map(str, self.parse())))
 
 if __name__ == "__main__":
     p = Parser(

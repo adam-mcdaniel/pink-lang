@@ -1,21 +1,23 @@
 from error import *
+import parse
 from parse import *
 
-TEMPLATES = [
-	"__A__", "__B__",
-	"__C__", "__D__",
-	"__E__", "__F__",
-	"__G__", "__H__",
-	"__I__", "__J__",
-	"__K__", "__L__",
-	"__M__", "__N__",
-	"__O__", "__P__",
-	"__Q__", "__R__",
-	"__S__", "__T__",
-	"__U__", "__V__",
-	"__W__", "__X__",
-	"__Y__", "__Z__"
-]
+def find_last_comma(l):
+    i = -1
+    for j, item in enumerate(l):
+        if Comma == type(item):
+            i = j
+
+    return i
+
+def find_first(l, t):
+    i = -1
+    for j, item in enumerate(l):
+        if t == type(item):
+            i = j
+    return i
+
+
 
 class Equals:
     def __str__(self, a=None): return "Equals"
@@ -63,6 +65,28 @@ operators = {
 }
 
 
+TEMPLATES = [
+	"__A__", "__B__",
+	"__C__", "__D__",
+	"__E__", "__F__",
+	"__G__", "__H__",
+	"__I__", "__J__",
+	"__K__", "__L__",
+	"__M__", "__N__",
+	"__O__", "__P__",
+	"__Q__", "__R__",
+	"__S__", "__T__",
+	"__U__", "__V__",
+	"__W__", "__X__",
+	"__Y__", "__Z__"
+]
+
+
+separators = ["\"", ","] + list(operators.keys())
+
+
+
+
 class String:
     def __init__(self, value):
         self.value = value
@@ -77,6 +101,33 @@ class Number:
 
     def __eq__(self, a): return str(self) == a
     def __str__(self, a=None): return "Number(" + str(self.value) + ")"
+
+
+class Include:
+    def __init__(self, value):
+        self.value = value
+
+    def __eq__(self, a): return str(self) == a
+    def __str__(self, a=None): return "#include \"../include/" + str(self.value) + "\""
+
+
+class Import:
+    def __init__(self, value):
+        self.value = value
+
+    def __eq__(self, a): return str(self) == a
+    def __str__(self, a=None):
+        try:
+            with open(f"src/{self.value}", "r") as f:
+                contents = f.read()
+                f.close()
+        except:
+            error.error(f"Could not open src/{self.value}")
+            sys.exit(1)
+
+        return '\n\n\n'.join(list(map(str, 
+                    list(filter(lambda t: not isinstance(t, Main), parse.Parser(contents+"\n\n").parse()))
+                )))
 
 
 class Identifier:
