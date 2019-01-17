@@ -76,6 +76,7 @@ public:
 
 template<typename __A__, typename __B__>
 class Piped : public Function {
+public:
     __A__ a;
     __B__ b;
     Piped(__A__ a, __B__ b) {

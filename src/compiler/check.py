@@ -1,6 +1,7 @@
-from error import error
+from error import error, warning
 
 def check(err):
+    warning("Errors found")
     error_message = str(err, "utf-8")
     # print(error_message)
     
