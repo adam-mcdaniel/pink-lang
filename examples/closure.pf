@@ -1,11 +1,11 @@
 Even = n.(
-    Equals[Mod[n, 2], 0]
+    Eq[Mod[n, 2], 0]
 )
 
 collatz = n.(
     Println["collatz: ", n]
 
-    Break[Equals[n, 1], n]
+    Break[Eq[n, 1], n]
 
     If[Even[n], Div[n, 2], Add[Mul[3, n], 1]]
 )

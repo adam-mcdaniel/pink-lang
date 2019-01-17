@@ -1,6 +1,6 @@
 
 StructExample = a.b.c.(
-    Pair[a, Pair[b, Pair[c, None[]]]]
+    Pair[a, Pair[b, Pair[c, None]]]
 )
 
 print_a = s.(
