@@ -1,56 +1,19 @@
-
-Head = p.(
-    First[p]
-)
-
-Tail = p.(
-    Second[p]
-)
-
-
-MakeError = s.(
-    Concat["=[ ERROR ]===> ", s]
-)
-
-IfError = c.s.(
-    Exit[c, 
-        Print[
-            If[
-                c,
-                Concat[MakeError[s], "\n"],
-                ""
-            ]
-        ]
-    ]
-)
-
-
 index = p.n.(
-    IfError[
+    AssertExit[
         GreaterEq[n, len[p]],
         "First argument must be less than or equal to the number of arguments"
     ]
 
-
-    Exit[GreaterEq[n, len[p]], 1]
-
-
-    First[
-        For[
-            n,
-            Second,
-            p
-        ]
-    ]
+    Index[p, n]
 )
 
 main = args.(
-    IfError[
+    AssertExit[
         Less[len[args], 2],
         "Requires at least 2 arguments"
     ]
 
-    IfError[
+    AssertExit[
         Not[IsNumber[index[args, 0]]],
         "First argument must be number"
     ]

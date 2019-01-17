@@ -1,6 +1,8 @@
 #pragma once
 #include "function.cpp"
 #include "data.cpp"
+#include "error.cpp"
+#include "io.cpp"
 
 
 class Identity : public Function {
@@ -132,4 +134,24 @@ public:
         
         return Function();
     }
+};
+
+
+class AssertExit : public Function {
+public:
+	template<typename __A__, typename __B__>
+	auto call(__A__ c, __B__ s) {
+		return Exit().call(c, Print().call(If().call(c, Concat().call(Concat().call(String("=[ ERROR ]===> "), s), String("\n")), String(""))));
+	}
+};
+
+
+class Index : public Function {
+public:
+	template<typename __A__, typename __B__>
+	auto call(__A__ p, __B__ n) {
+		AssertExit().call(GreaterEq().call(n, len().call(p)), String("Index out of bounds"));
+		Exit().call(GreaterEq().call(n, len().call(p)), Number(1));
+		return First().call(For().call(n, Second(), p));
+	}
 };

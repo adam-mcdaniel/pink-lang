@@ -9,14 +9,14 @@ def check(err):
     for line in error_message.split('\n'):
         # print("line: ", line)
         if "In member function ‘auto Main::call(__A__)’" in line:
-            error("In 'main': ", end='')
+            error("In 'main': ")
         
         elif "error:" in line and "was not declared in this scope" in line:
             a = line.find("error: ")
             b = line.find("was not declared")
             # print(line[a + len("error: "): b-a-len("error: ")])
             # print(line[a : b-a-len("error: ")])
-            print("'" + line[a + len("error: "): b][1:-2] + "' was not defined")
+            print("\t\t'" + line[a + len("error: "): b][1:-2] + "' was not defined")
         
         
         elif "error:" in line and " so a declaration of " in line:
@@ -24,7 +24,7 @@ def check(err):
             b = line.find(" must be available ")
             # print(line[a + len("error: "): b-a-len("error: ")])
             # print(line[a : b-a-len("error: ")])
-            print("'" + line[a + len(" so a declaration of "): b][1:-1] + "' was not defined")
+            print("\t\t'" + line[a + len(" so a declaration of "): b][1:-1] + "' was not defined")
         
         
         # elif "In member function ‘auto Main::call(__A__)’" in line:
@@ -33,4 +33,4 @@ def check(err):
             b = line.find("::")
             
             # print("In : ", end='')
-            error("In '" + line[a + len("In member function ‘auto "): b] + "': ", end='')
+            error("In '" + line[a + len("In member function ‘auto "): b] + "': ")

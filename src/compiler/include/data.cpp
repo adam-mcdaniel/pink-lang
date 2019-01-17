@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include "function.cpp"
 #include "error.cpp"
+#include "io.cpp"
 using namespace std;
 
 
@@ -279,3 +280,4 @@ public:
         return a.second();
     }
 };
+
