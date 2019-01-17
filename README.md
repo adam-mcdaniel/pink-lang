@@ -95,7 +95,7 @@ class Put : public Function {
 public:
     template<typename A>
     auto call(A a) {
-		Println().call(a) // call pink-lang's print
+	Println().call(a) // call pink-lang's print
         return a;
     }
 };
