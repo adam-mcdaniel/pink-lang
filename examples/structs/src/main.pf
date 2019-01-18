@@ -1,40 +1,9 @@
-
-StructExample = a.b.c.(
-    Pair[a, Pair[b, Pair[c, None]]]
-)
-
-print_a = s.(
-    Print[
-        First[s]
-    ]
-
-    Identity[s]
-)
-
-print_b = s.(
-    Print[
-        First[Second[s]]
-    ]
-
-    Identity[s]
-)
-
-print_c = s.(
-    Print[
-        First[Second[Second[s]]]
-    ]
-
-    Identity[s]
-)
-
-
-Newln = a.(
-    Print["\n"]
-    Identity[a]
-)
+Import["sprite.pf"]
 
 main = args.(
-    Newln[
-        print_c[print_b[print_a[StructExample[1, 2, 3]]]]
-        ]
+	Println["(left, right, up, down)"]
+	Loop[
+		Pipe[println, update],
+		make_sprite[0, 0, "Adam"]
+	]
 )

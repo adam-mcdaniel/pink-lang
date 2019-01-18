@@ -72,6 +72,10 @@ public:
     bool get_boolean() {
         return this->boolean;
     }
+    
+    vector<Function> get_pair() {
+        return this->pair;
+    }
 
     virtual Function call() {
         return *this;

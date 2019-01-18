@@ -67,10 +67,10 @@ process = subprocess.Popen(
 (out, err) = process.communicate()
 
 if "--verbose" in sys.argv:
-    error = str(err, "utf-8")
-    if len(error):
+    e = str(err, "utf-8")
+    if len(e):
         print(
-            " ||   "+ "\n ||   ".join(error.split("\n"))
+            " ||   "+ "\n ||   ".join(e.split("\n"))
             )
 
 
