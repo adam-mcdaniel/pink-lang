@@ -16,6 +16,8 @@ main = args.(
         "Argument must be an integer"
     ]
 
+    Println[args]
+
     fib[
         StrToNum[Index[args, 0]]
     ]

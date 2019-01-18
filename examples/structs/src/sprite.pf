@@ -55,7 +55,7 @@ update_input = s.input.(
                 move_left[s],
                 If[Eq[input, "right"],
                     move_right[s],
-                    s
+	            Break[Eq[input, "exit"], s],
                 ]
             ]
         ]

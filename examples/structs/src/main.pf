@@ -1,9 +1,9 @@
 Import["sprite.pf"]
 
 main = args.(
-	Println["(left, right, up, down)"]
+	Println["(left, right, up, down, exit)"]
 	Loop[
-		Pipe[println, update],
+		Pipe[update, println],
 		make_sprite[0, 0, "Adam"]
 	]
 )

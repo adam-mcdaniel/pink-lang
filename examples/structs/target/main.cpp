@@ -106,7 +106,7 @@ class update_input : public Function {
 public:
 	template<typename __A__, typename __B__>
 	auto call(__A__ s, __B__ input) {
-		return If().call(Eq().call(input, String("up")), move_up().call(s), If().call(Eq().call(input, String("down")), move_down().call(s), If().call(Eq().call(input, String("left")), move_left().call(s), If().call(Eq().call(input, String("right")), move_right().call(s), s))));
+		return If().call(Eq().call(input, String("up")), move_up().call(s), If().call(Eq().call(input, String("down")), move_down().call(s), If().call(Eq().call(input, String("left")), move_left().call(s), If().call(Eq().call(input, String("right")), move_right().call(s), Break().call(Eq().call(input, String("exit")), s)))));
 	}
 };
 
@@ -153,8 +153,8 @@ class Main : public Function {
 public:
 	template<typename __A__>
 	auto call(__A__ args) {
-		Println().call(String("(left, right, up, down)"));
-		return Loop().call(Pipe().call(println(), update()), make_sprite().call(Number(0), Number(0), String("Adam")));
+		Println().call(String("(left, right, up, down, exit)"));
+		return Loop().call(Pipe().call(update(), println()), make_sprite().call(Number(0), Number(0), String("Adam")));
 	}
 };
 

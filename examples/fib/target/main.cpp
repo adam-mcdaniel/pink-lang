@@ -31,8 +31,8 @@ class Main : public Function {
 public:
 	template<typename __A__>
 	auto call(__A__ args) {
-		Assert().call(Less().call(len().call(args), Number(1)), String("No argument supplied"));
 		Assert().call(Not().call(IsNumber().call(Index().call(args, Number(0)))), String("Argument must be an integer"));
+		Println().call(args);
 		return fib().call(StrToNum().call(Index().call(args, Number(0))));
 	}
 };

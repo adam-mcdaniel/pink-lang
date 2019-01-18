@@ -141,6 +141,15 @@ class Identifier:
     def __str__(self, a=None): return self.name
 
 
+class ValueDefinition:
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+
+    def __eq__(self, a): return str(self) == a
+    def __str__(self, a=None): return "auto {self.name} = []() { return {self.value}; };"
+
+
 class FunctionCall:
     def __init__(self, name, parameters):
         self.name = name

@@ -8,10 +8,6 @@ Triple = n.(
 	Mul[3, n]
 )
 
-Quadruple = n.(
-	Mul[4, n]
-)
-
 main = args.(
 	compose::Compose[
 		Println,
