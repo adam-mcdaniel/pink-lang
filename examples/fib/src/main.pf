@@ -12,11 +12,6 @@ fib = n.(
 
 main = args.(
     Assert[
-        Less[len[args], 1]
-        "No argument supplied"
-    ]
-
-    Assert[
         Not[IsNumber[Index[args, 0]]]
         "Argument must be an integer"
     ]
