@@ -1,0 +1,82 @@
+Include["mem.cpp"]
+Include["object.cpp"]
+
+
+get_x = s.(
+	Second[
+		object::get_attr[s, "x"]
+	]
+)
+
+get_y = s.(
+	Second[
+		object::get_attr[s, "y"]
+	]
+)
+
+get_name = s.(
+	Second[
+		object::get_attr[s, "name"]
+	]
+)
+
+
+set_x = s.x.(
+    object::set_attr[s, "x", x]
+)
+
+set_y = s.y.(
+    object::set_attr[s, "y", y]
+)
+
+set_name = s.name.(
+    object::set_attr[s, "name", name]
+)
+
+move_up = s.(
+    set_y[s, Add[get_y[s], 1]]
+)
+move_down = s.(
+    set_y[s, Sub[get_y[s], 1]]
+)
+
+move_left = s.(
+    set_x[s, Sub[get_x[s], 1]]
+)
+move_right = s.(
+    set_x[s, Add[get_x[s], 1]]
+)
+
+update = s.(
+    mem::let["input", Input["? "]]
+
+    If[Eq[mem::get["input"], "up"],
+        move_up[s],
+        If[Eq[mem::get["input"], "down"],
+            move_down[s],
+            If[Eq[mem::get["input"], "left"],
+                move_left[s],
+                If[Eq[mem::get["input"], "right"],
+                    move_right[s],
+                    Break[Eq[mem::get["input"], "exit"], s],
+                ]
+            ]
+        ]
+    ]
+)
+
+print = s.(
+    Print["(", get_x[s], ", ", get_y[s], ")"]
+    Identity[s]
+)
+
+println = s.(
+    Println[print[s]]
+    Identity[s]
+)
+
+
+
+make_sprite = x.y.name.(
+	set_x[set_y[set_name[object::Struct["x", "y", "name"], name], y], x]
+)
