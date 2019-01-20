@@ -152,7 +152,7 @@ public:
 	template<typename __A__>
 	auto call(__A__ args) {
 		Println().call(String("(left, right, up, down, exit)"));
-		return Loop().call(compose::Compose().call(update(), println()), make_sprite().call(Number(0), Number(0), String("Adam")));
+		return Loop().call(compose::Compose().call(println(), update()), make_sprite().call(Number(0), Number(0), String("Adam")));
 	}
 };
 

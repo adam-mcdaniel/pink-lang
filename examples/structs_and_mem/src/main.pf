@@ -4,7 +4,7 @@ Include["compose.cpp"]
 main = args.(
 	Println["(left, right, up, down, exit)"]
 	Loop[
-		compose::Compose[update, println],
+		compose::Compose[println, update],
 		make_sprite[0, 0, "Adam"]
 	]
 )
