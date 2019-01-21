@@ -3,9 +3,23 @@ from error import *
 from tokens import *
 
 
+def remove_comment_from_line(line, sep):
+    for s in sep:
+        i = line.find(s)
+        if i >= 0:
+            line = line[:i]
+    return line.strip()
+
+def remove_comments(script, sep):
+    new_script = ""
+    for line in script.split('\n'):
+        new_script += remove_comment_from_line(line, sep) + '\n'
+    return new_script
+
+
 class Parser:
     def __init__(self, script):
-        self.script = script
+        self.script = remove_comments(script, ";")
         ws = re.compile(r'\s+')
         self.script_no_white_space = re.sub(ws, '', self.script)
         # print(self.script_no_white_space)

@@ -78,6 +78,6 @@ println = s.(
 
 
 
-make_sprite = x.y.name.(
+Sprite = x.y.name.(
 	object::Struct["x", "y", "name"]~set_name[name]~set_y[y]~set_x[x]
 )

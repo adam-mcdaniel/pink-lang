@@ -135,7 +135,7 @@ public:
 };
 
 
-class make_sprite : public Function {
+class Sprite : public Function {
 public:
 	template<typename __A__, typename __B__, typename __C__>
 	auto call(__A__ x, __B__ y, __C__ name) {
@@ -152,7 +152,7 @@ public:
 	template<typename __A__>
 	auto call(__A__ args) {
 		Println().call(String("(left, right, up, down, exit)"));
-		return Loop().call(compose::Compose().call(println(), update()), make_sprite().call(Number(0), Number(0), String("Adam")));
+		return Loop().call(compose::Compose().call(println(), update()), Sprite().call(Number(0), Number(0), String("Adam")));
 	}
 };
 
