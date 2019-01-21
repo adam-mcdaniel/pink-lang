@@ -12,11 +12,9 @@ fib = n.(
 
 main = args.(
     Assert[
-        Not[IsNumber[Index[args, 0]]]
+        Not[IsNumber[Index[args, 0]]],
         "Argument must be an integer"
     ]
-
-    Println[args]
 
     fib[
         StrToNum[Index[args, 0]]

@@ -79,8 +79,11 @@ public:
 template<typename __A__, typename __B__>
 class Piped : public Function {
 public:
-    __A__ a;
-    __B__ b;
+    __A__ a = __A__();
+    __B__ b = __B__();
+    Piped() {
+    }
+
     Piped(__A__ a, __B__ b) {
         this->a = a;
         this->b = b;
