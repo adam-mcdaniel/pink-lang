@@ -6,7 +6,6 @@ Import["system.pf"]
 
 update = path.(
 	InfoMsg["Updating project '"~Concat[path]~Concat["'"]]
-
 	InfoMsg["Removing 'target/'"]
 	rmdir[path~Concat["/target"]]
 	InfoMsg["Removing 'include/std/'"]
@@ -28,8 +27,6 @@ update = path.(
 
 project = path.(
 	InfoMsg["Creating project '"~Concat[path]~Concat["'"]]
-
-
 	InfoMsg["Creating project folder"]
 	mkdir[path]
 	InfoMsg["Installing pyinstaller"]
