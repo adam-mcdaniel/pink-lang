@@ -1,5 +1,5 @@
 index = p.n.(
-    Assert[
+    Error[
         GreaterEq[n, len[p]],
         "First argument must be less than or equal to the number of arguments"
     ]
@@ -8,12 +8,12 @@ index = p.n.(
 )
 
 main = args.(
-    Assert[
+    Error[
         Less[len[args], 2],
         "Requires at least 2 arguments"
     ]
 
-    Assert[
+    Error[
         Not[IsNumber[index[args, 0]]],
         "First argument must be number"
     ]

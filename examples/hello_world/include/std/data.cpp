@@ -150,12 +150,11 @@ class Bool : public Function {
 public:
     Bool(bool boolean) {
         this->boolean = boolean;
-    }
-
-    template<typename A, typename B>
-    auto call(A a, B b) {
-        if (this->boolean) return a;
-        else return b;
+        if (boolean) {
+            this->data = "True";
+        } else {
+            this->data = "False";
+        }
     }
 };
 

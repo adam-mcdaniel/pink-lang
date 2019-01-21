@@ -13,17 +13,17 @@ collatz = n.(
 
 
 main = args.(
-    Assert[
+    Error[
         Less[len[args], 1]
         "No argument supplied"
     ]
 
-    Assert[
+    Error[
         Not[IsNumber[Index[args, 0]]]
         "Argument must be an integer"
     ]
 
-    Assert[
+    Error[
         Less[StrToNum[Index[args, 0]], 1]
         "Argument must be above 0"
     ]

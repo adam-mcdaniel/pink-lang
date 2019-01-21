@@ -3,7 +3,7 @@ Import["test.pf"]
 
 
 print_index = n.(
-	Assert[
+	Error[
 		Not[Less[n, LenStr["testing"]]],
 		"Index out of bounds"
 		]

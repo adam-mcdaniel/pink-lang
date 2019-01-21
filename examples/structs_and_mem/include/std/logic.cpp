@@ -124,9 +124,21 @@ public:
 };
 
 
+class LazyIf : public Function {
+public:
+    template<typename __A__, typename __B__, typename __C__>
+    auto call(__A__ a, __B__ b, __C__ c) {
+        if (a.get_boolean() > 0) {
+            b.call(c);
+        }
+        return c;
+    }
+};
 
 
-class Assert : public Function {
+
+
+class Error : public Function {
 public:
 	template<typename __A__, typename __B__>
 	auto call(__A__ c, __B__ s) {
@@ -139,7 +151,7 @@ class Index : public Function {
 public:
 	template<typename __A__, typename __B__>
 	auto call(__A__ p, __B__ n) {
-		Assert().call(GreaterEq().call(n, len().call(p)), String("Index out of bounds"));
+		Error().call(GreaterEq().call(n, len().call(p)), String("Index out of bounds"));
 		Exit().call(GreaterEq().call(n, len().call(p)), Number(1));
 		return First().call(For().call(n, Second(), p));
 	}

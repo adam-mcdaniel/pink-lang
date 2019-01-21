@@ -53,7 +53,7 @@ public:
 };
 
 
-class Info : public Function {
+class InfoMsg : public Function {
 public:
     template<typename A>
     auto call(A a) {
@@ -63,7 +63,7 @@ public:
 };
 
 
-class Debug : public Function {
+class DebugMsg : public Function {
 public:
     template<typename A>
     auto call(A a) {
@@ -73,7 +73,7 @@ public:
 };
 
 
-class Warning : public Function {
+class WarningMsg : public Function {
 public:
     template<typename A>
     auto call(A a) {
@@ -83,7 +83,7 @@ public:
 };
 
 
-class Error : public Function {
+class ErrorMsg : public Function {
 public:
     template<typename A>
     auto call(A a) {

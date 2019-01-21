@@ -3,23 +3,23 @@ from error import *
 from tokens import *
 
 
-def remove_comment_from_line(line, sep):
-    for s in sep:
-        i = line.find(s)
-        if i >= 0:
-            line = line[:i]
-    return line.strip()
+# def remove_comment_from_line(line, sep):
+#     for s in sep:
+#         i = line.find(s)
+#         if i >= 0:
+#             line = line[:i]
+#     return line.strip()
 
-def remove_comments(script, sep):
-    new_script = ""
-    for line in script.split('\n'):
-        new_script += remove_comment_from_line(line, sep) + '\n'
-    return new_script
+# def remove_comments(script, sep):
+#     new_script = ""
+#     for line in script.split('\n'):
+#         new_script += remove_comment_from_line(line, sep) + '\n'
+#     return new_script
 
 
 class Parser:
     def __init__(self, script):
-        self.script = remove_comments(script, ";")
+        self.script = script
         ws = re.compile(r'\s+')
         self.script_no_white_space = re.sub(ws, '', self.script)
         # print(self.script_no_white_space)
@@ -38,6 +38,7 @@ class Parser:
     def next_char(self): return self.script[self.current_index+1]
     def last_char(self): return self.script[self.current_index-1]
     def next(self): self.current_index += 1
+    def last(self): self.current_index -= 1
     def is_done(self): return self.current_index == len(self.script)-1
 
     def last_token_is_string(self): return type(self.token_stack[-1]) is String
@@ -195,6 +196,12 @@ class Parser:
                     self.current_char()
                 )
                 self.append_token()
+
+            elif self.current_char() == ";" and not self.in_string:
+                self.append_token()
+                while not self.current_char() == "\n":
+                    self.next()
+                self.last()
                 
             else:
                 self.add_char_to_token(

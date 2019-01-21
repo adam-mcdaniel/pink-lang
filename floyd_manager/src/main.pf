@@ -1,0 +1,113 @@
+Include["os.cpp"]
+Include["mem.cpp"]
+
+Import["system.pf"]
+
+
+update = path.(
+	InfoMsg["Updating project '"~Concat[path]~Concat["'"]]
+
+	InfoMsg["Removing 'target/'"]
+	rmdir[path~Concat["/target"]]
+	InfoMsg["Removing 'include/std/'"]
+	rmdir[path~Concat["/include/std"]]
+	InfoMsg["Installing pyinstaller"]
+	pip_install["pyinstaller"]
+	InfoMsg["Packaging the compiler"]
+	compile_compiler[path]
+	InfoMsg["Creating 'target/'"]
+	mkdir[path~Concat["/target"]]
+	InfoMsg["Creating 'include/std/'"]
+	mkdir[path~Concat["/include/std"]]
+	InfoMsg["Creating standard library"]
+	cp["src/compiler/include/std", path~Concat["/include"]]
+	InfoMsg["Writing 'run' script"]
+	write_run_script[path]
+)
+
+
+project = path.(
+	InfoMsg["Creating project '"~Concat[path]~Concat["'"]]
+
+
+	InfoMsg["Creating project folder"]
+	mkdir[path]
+	InfoMsg["Installing pyinstaller"]
+	pip_install["pyinstaller"]
+	InfoMsg["Creating 'include/std/'"]
+	mkdir[path~Concat["/include/std"]]
+	InfoMsg["Creating 'src/'"]
+	mkdir[path~Concat["/src"]]
+	InfoMsg["Creating 'target/'"]
+	mkdir[path~Concat["/target"]]
+	InfoMsg["Creating standard library"]
+	cp["src/compiler/include/std", path~Concat["/include"]]
+	InfoMsg["Writing to 'src/main.pf'"]
+	write_file[path~Concat["/src/main.pf"], "main = args.(\n\tPrintln[\"Hello world!\"]\n)"]
+	InfoMsg["Writing 'run' script"]
+	write_run_script[path]
+	InfoMsg["Packaging the compiler"]
+	compile_compiler[path]
+)
+
+
+repair = path.(
+	InfoMsg["Repairing project '"~Concat[path]~Concat["'"]]
+
+	InfoMsg["Creating project folder"]
+	mkdir[path]
+	InfoMsg["Creating 'include/std/'"]
+	mkdir[path~Concat["/include/std"]]
+	InfoMsg["Creating 'src/'"]
+	mkdir[path~Concat["/src"]]
+	InfoMsg["Creating 'target/'"]
+	mkdir[path~Concat["/target"]]
+	update[path]
+)
+
+
+help = path.(
+	InfoMsg["Usage: `floyd (update | project | repair) /path/to/project/dir`"]
+	Exit[True, 0]
+)
+
+
+main = args.(
+	args~len[]
+		~LessEq[1]
+		~And[args~Index[0]~NotEq["help"]]
+		~Error["Must supply a command and a path"]
+	
+	args~Index[0]~NotEq["update"]
+		~And[args~Index[0]~NotEq["project"]]
+		~And[args~Index[0]~NotEq["repair"]]
+		~And[args~Index[0]~NotEq["help"]]
+		~Error["Invalid command '"~Concat[args~Index[0]]~Concat["'"]]
+
+	LazyIf[args~Index[0]~Eq["help"], help, None]
+
+	InfoMsg["Starting Floyd Package Manager"]
+
+
+	mem::let["name", args~Index[1]]
+	
+	mem::let["os", os::get_system[None]]
+	mem::let["is_posix", NotEq[os::get_system[None], "Windows"]]
+
+
+	InfoMsg[
+		"You are "
+			~Concat[If[mem::get["is_posix"], "", "not "]]
+			~Concat["using a posix compatible system"]
+	]
+
+
+	LazyIf[args~Index[0]~Eq["update"], update, mem::get["name"]]
+	LazyIf[args~Index[0]~Eq["update"], InfoMsg, "Project successfully upgraded"]
+
+	LazyIf[args~Index[0]~Eq["project"], project, mem::get["name"]]
+	LazyIf[args~Index[0]~Eq["project"], InfoMsg, "Project successfully created"]
+
+	LazyIf[args~Index[0]~Eq["repair"], repair, mem::get["name"]]
+	LazyIf[args~Index[0]~Eq["repair"], InfoMsg, "Project successfully repaired"]
+)

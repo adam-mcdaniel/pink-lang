@@ -11,7 +11,7 @@ fib = n.(
 
 
 main = args.(
-    Assert[
+    Error[
         Not[IsNumber[Index[args, 0]]],
         "Argument must be an integer"
     ]

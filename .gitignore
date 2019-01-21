@@ -2,4 +2,3 @@
 .vscode/
 *.spec
 build
-update.sh

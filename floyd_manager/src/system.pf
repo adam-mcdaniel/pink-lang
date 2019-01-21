@@ -1,0 +1,98 @@
+
+
+shell = unix.win.param.(
+    If[
+        Eq[os::shell[
+            Concat[
+                If[
+                    mem::get["is_posix"],
+                    unix,
+                    win
+                ],
+                param
+            ]
+        ], 0]
+        False,
+        True
+    ]
+)
+
+
+cmd = func.unix.win.param.(
+    If[
+        Eq[func[
+            Concat[
+                If[
+                    mem::get["is_posix"],
+                    unix,
+                    win
+                ],
+                param
+            ]
+        ], 0]
+        False,
+        True
+    ]
+)
+
+
+mkdir = name.(
+    Error[
+        shell["mkdir -p ", "mkdir ", name],
+        "Could not create directory '"~Concat[name]~Concat["'"]
+    ]
+)
+
+
+cp = src.dest.(
+    Error[
+        shell["cp -r "~Concat[src]~Concat[" "], " xcopy "~Concat[src]~Concat[" "], dest],
+        "Could not copy '"~Concat[src]~Concat["'"]~Concat["' to '"]~Concat[dest]~Concat["'"]
+    ]
+)
+
+
+rmdir = name.(
+    Error[
+        shell["rm -r ", "deltree ", name],
+        "Could not remove directory '"~Concat[name]~Concat["'"]
+    ]
+)
+
+
+pip_install = name.(
+    Error[
+        shell["python3 -m pip install --upgrade ", "python3 -m pip install --upgrade  ", name],
+        "Could not install Python3 package '"~Concat[name]~Concat["'. Do you have Python3 installed?"]
+    ]
+)
+
+
+compile_compiler = name.(
+    Error[
+        shell["pyinstaller --onefile --clean src/compiler/pf.py --distpath ", "pyinstaller --onefile --clean src/compiler/pf.py --distpath ", name],
+        "Could not package compiler with pyinstaller. Did pyinstaller install properly?"
+    ]
+)
+
+
+write_file = name.content.(
+    Error[
+        shell["echo '"~Concat[content]~Concat["' > "], "echo '"~Concat[content]~Concat["' > "], name],
+        "Could not write to file '"~Concat[name]~Concat["'"]
+    ]
+)
+
+
+write_run_script = name.(
+    write_file[
+        If[
+            mem::get["is_posix"],
+            name~Concat["/run"],
+            name~Concat["/run.bat"],
+        ].
+        "./pf; ./target/bin"
+    ]
+
+    shell["chmod +x "~Concat[name]~Concat["/run"], "", ""]
+)

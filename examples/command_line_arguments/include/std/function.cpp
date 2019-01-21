@@ -87,6 +87,12 @@ public:
         return *this;
     }
 
+    template<typename A, typename B>
+    Function call(A a, B b) {
+        if (this->boolean) return a;
+        else return b;
+    }
+
     template<typename F>
     Function call(F f, ...) {
         info("called Function::call var arg");
