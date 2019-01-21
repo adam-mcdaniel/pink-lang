@@ -59,13 +59,11 @@ class Parser:
         self.clear_current_token()
         
     def reducable(self, stack):
-        result = False
-
         for item in stack:
             if type(item) in [CloseBracket, CloseCall]:
-                result = True
+                return True
 
-        return result
+        return False
 
     def reduce(self):
         tokens = []
@@ -98,6 +96,19 @@ class Parser:
                             )
                         )
 
+                    elif find_in(tokens, Pipe) and CloseCall() == tokens[-1] and (tokens.count(OpenCall()) == tokens.count(CloseCall()) or tokens[find_first(tokens, Pipe)+2:].count(OpenCall()) == 1):
+                        for token in tokens[:find_first(tokens, Pipe)-1]:
+                            self.token_stack.append(token)
+
+                        self.token_stack.append(
+                            FunctionCall(
+                                tokens[find_first(tokens, OpenCall)-1],
+                                list(filter(
+                                    lambda t: type(t) not in [Comma, Dot],
+                                    [tokens[find_first(tokens, Pipe)-1]] + tokens[find_first(tokens, OpenCall)+1: find_first(tokens, CloseCall)]))
+                            )
+                        )
+
                     elif CloseCall() == tokens[-1]:
                         for token in tokens[:find_first(tokens, OpenCall)-1]:
                             self.token_stack.append(token)
@@ -117,7 +128,6 @@ class Parser:
 
                         self.token_stack.append(
                             Main(
-
                                 list(map(str, list(filter(
                                     lambda t: type(t) not in [Dot],
                                     tokens[find_first(tokens, Equals)+1:find_first(tokens, OpenBracket)])))),
@@ -129,17 +139,18 @@ class Parser:
                     elif CloseBracket == type(tokens[-1]):
                         for token in tokens[:find_first(tokens, Equals)-1]:
                             self.token_stack.append(token)
-                            
+                        f =  FunctionDefinition(
+                            tokens[find_first(tokens, Equals)-1],
+
+                            list(map(str, list(filter(
+                                lambda t: type(t) not in [Dot],
+                                tokens[find_first(tokens, Equals)+1:find_first(tokens, OpenBracket)])))),
+
+                            *tokens[find_first(tokens, OpenBracket)+1:-1]
+                        )
+                        # print(f)
                         self.token_stack.append(
-                            FunctionDefinition(
-                                tokens[find_first(tokens, Equals)-1],
-
-                                list(map(str, list(filter(
-                                    lambda t: type(t) not in [Dot],
-                                    tokens[find_first(tokens, Equals)+1:find_first(tokens, OpenBracket)])))),
-
-                                *tokens[find_first(tokens, OpenBracket)+1:-1]
-                            )
+                            f
                         )
                         # for token in tokens[:find_first(tokens, OpenCall)-1]:
 
@@ -147,7 +158,6 @@ class Parser:
                     done = True
 
     def parse(self):
-        list(map(lambda t: print(":", type(t), str(t)), self.token_stack))
         while not self.is_done():
             if not self.in_string and self.current_char() in [" ", "\t", "\n"]:
                 self.next()
@@ -179,6 +189,9 @@ class Parser:
 
             self.next()
             self.reduce()
+            # print("STACK")
+
+        # list(map(lambda t: print(":", type(t), str(t)), self.token_stack))
 
         return self.token_stack
 

@@ -2,6 +2,7 @@ from error import *
 import parse
 from parse import *
 
+
 def find_last_comma(l):
     i = -1
     for j, item in enumerate(l):
@@ -17,6 +18,23 @@ def find_first(l, t):
             i = j
     return i
 
+def find_last(l, t):
+    i = 0
+    for j, item in enumerate(l[::-1]):
+        if t == type(item):
+            i = j
+    return len(l) - i -1
+
+def find_in(l, t):
+    for _, item in enumerate(l):
+        if t == type(item):
+            return True
+    return False
+
+
+class Pipe:
+    def __str__(self, a=None): return "Pipe"
+    def __eq__(self, a): return str(self) == str(a)
 
 
 class Equals:
@@ -55,6 +73,7 @@ class Comma:
 
 
 operators = {
+    "~": Pipe(),
     "=": Equals(),
     ".": Dot(),
     ",": Comma(),
@@ -83,8 +102,6 @@ TEMPLATES = [
 
 
 separators = ["\"", ","] + list(operators.keys())
-
-
 
 
 class String:
@@ -138,16 +155,7 @@ class Identifier:
             exit(1)
 
     def __eq__(self, a): return str(self) == a
-    def __str__(self, a=None): return self.name
-
-
-class ValueDefinition:
-    def __init__(self, name, value):
-        self.name = name
-        self.value = value
-
-    def __eq__(self, a): return str(self) == a
-    def __str__(self, a=None): return "auto {self.name} = []() { return {self.value}; };"
+    def __str__(self, a=None): return str(self.name)
 
 
 class FunctionCall:
@@ -156,8 +164,9 @@ class FunctionCall:
         self.parameters = parameters
 
     def __str__(self, fn_def_obj=None):
-        if not fn_def_obj:
-            print(self.name, self.parameters)
+        # if not fn_def_obj:
+        #     print(self.name, self.parameters)
+
         result = self.name.__str__(fn_def_obj)
         if fn_def_obj:
             if not fn_def_obj.in_scope(self.name.__str__(fn_def_obj)) and result[-1] not in operators.keys():
@@ -193,6 +202,17 @@ class FunctionDefinition:
     def __init__(self, name, parameter_names, *body):
         self.name = name
         self.parameter_names = parameter_names
+
+        if type(name) != Identifier:
+            error("Function definition name is not a valid identifier")
+            exit(1)
+            
+        # for n in parameter_names:
+        #     if type(n) not in [Identifier]:
+        #         error(f"In '{self.name}': ")
+        #         print(f"\t\tInvalid parameter '{n}'")
+        #         exit(1)
+
         if len(body) > 0:
             self.body = body
         else:
@@ -221,13 +241,15 @@ class FunctionDefinition:
         
         result += ") {\n\t\t"
         for command in self.body[:-1]:
-            try: result += command.__str__(self) + ";\n\t\t"
-            except: result += command.__str__() + ";\n\t\t"
-    
-        try: result += "return " + self.body[-1].__str__(self) + ";\n\t}\n};"
-        except:
-            # result += "return " + self.body[-1].__str__() if self.in_scope(self.body[-1].__str__()) else (self.body[-1].__str__() + "()") + ";\n\t}\n};"
-            result += "return " + self.body[-1].__str__() if self.in_scope(self.body[-1].__str__()) else self.body[-1].__str__() + ";\n\t}\n};"
+            result += command.__str__(self) + ";\n\t\t"
+            # try: result += command.__str__(self) + ";\n\t\t"
+            # except: result += command.__str__() + ";\n\t\t"
+
+        result += "return " + self.body[-1].__str__(self) + ";\n\t}\n};"
+        # try: result += "return " + self.body[-1].__str__(self) + ";\n\t}\n};"
+        # except:
+        #     # result += "return " + self.body[-1].__str__() if self.in_scope(self.body[-1].__str__()) else (self.body[-1].__str__() + "()") + ";\n\t}\n};"
+        #     result += "return " + self.body[-1].__str__() if self.in_scope(self.body[-1].__str__()) else self.body[-1].__str__() + ";\n\t}\n};"
         
         return result
 

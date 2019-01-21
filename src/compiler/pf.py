@@ -21,7 +21,7 @@ except Exception as e:
     error.error("Could not compile: Syntax error")
     sys.exit(1)
 
-output = parse.Parser(contents+"\n\n").parse_str()
+# output = parse.Parser(contents+"\n\n").parse_str()
 
 try:
     include = "./include/"
