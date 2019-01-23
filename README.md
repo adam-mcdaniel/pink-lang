@@ -200,13 +200,11 @@ If your project's `std` is out of date, you can `git pull`, and `make update pat
 
 ### Requirements
 
-Python3, g++ with C++14 support, and make.
+Python3, pip, g++ with C++14 support, and make.
 
 ### Installing
 
-To run pink-lang, you'll need a python3 installation to freeze the compiler with pyinstaller. Once, you build the compiler for your platform, however, everything else depends on stuff that should come ready with *nix machines: `make` and `g++` with `std=c++14`.
-
-To install pink-lang on a \*nix machine _(excluding the python3 installation)_, run this.
+I haven't built support for Windows yet, but it's on the way. This installation will work for Linux/MacOS machines that have met the above requirements.
 
 ```bash
 cd ~/Desktop
