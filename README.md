@@ -43,6 +43,33 @@ public:
 };
 ```
 
+Here's a function that allows for composing any number of functions together!
+```
+#include <iostream>
+#include "std/function.cpp"
+#include "std/io.cpp"
+#include "std/error.cpp"
+#include "std/data.cpp"
+#include "std/logic.cpp"
+using namespace std;
+
+namespace compose {
+    class Compose : public Function {
+    public:
+        template<typename A>
+        auto call(A a) {
+            return a;
+        }
+
+        template<typename A, typename... Args>
+        auto call(A a, Args... args) {
+            return Pipe().call(a, this->call(args...));
+        }
+    };
+}
+```
+
+
 See how easy that was?
 
 All you have to do to use that in pink-lang is to include your c++ file with the `Include["name_of_file.cpp"]` statement!
