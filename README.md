@@ -17,13 +17,13 @@ Here's how you can use it.
 
 Functions are applied using the `[]` operator, like this.
 
-```clojure
+```clj
 Println["Hello world!"]
 ```
 
 Multiple arguments can be supplied by separating them with commas.
 
-```clojure
+```clj
 Print["Hello ", "world!", "\n"]
 ```
 
@@ -33,7 +33,7 @@ You must supply the required number of arguments when you call a function, no mo
 
 Functions are defined with the `=` operator, like this.
 
-```clojure
+```clj
 double = n.(
 	Mul[n, 2]
 )
@@ -41,7 +41,7 @@ double = n.(
 
 The `n.` signifies that the function takes an argument named `n`. You can also signify multiple arguments like this.
 
-```clojure
+```clj
 sum = a.b.c.(
 	Add[a, Add[b, c]]
 )
@@ -51,7 +51,7 @@ The function `sum` takes 3 arguments, `a`, `b`, and `c`.
 
 The most important function is the `main` function. This function takes no arguments, or one argument. If you choose to let `main` take an argument, the argument will be a linked list of the arguments supplied to your program from the command line.
 
-```clojure
+```clj
 main = args.(
 	Println[args] ; this will print out the arguments supplied to your program
 )
@@ -69,7 +69,7 @@ So `1~Add[2]` is the same as `Add[1, 2]`.
 
 This makes it easier to write long chains of function calls. Here's an example.
 
-```clojure
+```clj
 ; the sum function rewritten
 sum = a.b.c.(
 	a~Add[b]~Add[c]
@@ -78,7 +78,7 @@ sum = a.b.c.(
 
 Here's another.
 
-```clojure
+```clj
 main = (
 	"Hello "~Print["world!", "\n"]
 )
@@ -159,7 +159,7 @@ pink-lang is blazingly fast, and it's very simple too. There are only 4 datatype
 
 To get command-line arguments, all one has to do is give their main function a parameter to receive them as a linked list.
 
-```clojure
+```clj
 main = your_parameter_name_here.(
 	Println[your_parameter_name_here]
 )
