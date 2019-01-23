@@ -34,6 +34,8 @@ try:
 #include "../include/std/error.cpp"
 #include "../include/std/data.cpp"
 #include "../include/std/logic.cpp"
+#include "../include/std/object.cpp"
+#include "../include/std/compose.cpp"
 using namespace std;\n\n\n
 """ + output + """
 

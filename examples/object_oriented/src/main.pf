@@ -1,9 +1,8 @@
 Import["sprite.pf"]
 Include["list.cpp"]
-Include["compose.cpp"]
 
 main = args.(
 	Println["(left, right, up, down, exit)"]
 
-	compose::Compose[println, update]~Loop[Sprite[0, 0, "Adam"]]
+	Compose[println, update]~Loop[Sprite[0, 0, "Adam"]]
 )

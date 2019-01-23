@@ -1,36 +1,35 @@
 Include["mem.cpp"]
-Include["object.cpp"]
 
 
 get_x = s.(
 	Second[
-		object::get_attr[s, "x"]
+		get_attr[s, "x"]
 	]
 )
 
 get_y = s.(
 	Second[
-		object::get_attr[s, "y"]
+		get_attr[s, "y"]
 	]
 )
 
 get_name = s.(
 	Second[
-		object::get_attr[s, "name"]
+		get_attr[s, "name"]
 	]
 )
 
 
 set_x = s.x.(
-    object::set_attr[s, "x", x]
+    set_attr[s, "x", x]
 )
 
 set_y = s.y.(
-    object::set_attr[s, "y", y]
+    set_attr[s, "y", y]
 )
 
 set_name = s.name.(
-    object::set_attr[s, "name", name]
+    set_attr[s, "name", name]
 )
 
 move_up = s.(
@@ -78,5 +77,5 @@ println = s.(
 
 
 make_sprite = x.y.name.(
-	set_x[set_y[set_name[object::Struct["x", "y", "name"], name], y], x]
+	set_x[set_y[set_name[Struct["x", "y", "name"], name], y], x]
 )
