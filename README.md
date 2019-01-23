@@ -7,79 +7,7 @@ A (kind of) functional programming language that compiles to native
 ## What is pink-lang?
 
 pink-lang is a (kind of) functional programming language with incredible performance.
-
-It's relatively high-level, but there are a few things that make it more difficult to use than some other programming languages.
-
-Here are the draw backs.
-
-# Drawbacks
----
-
-## Arguments to functions are evaluated immediately
-
-This is a problem because you cannot effectively use a function with side-effects as an argument to another function. Here's what I mean.
-
-This code block is pointless because it evaluates both `Println` statements, then returns the result of the first one.
-
-```fsharp
-If[
-	True,
-	Println["Hello world!"],
-	Println["Goodbye world!"]
-]
-```
-
-This next code block does what we want, though.
-
-```fsharp
-Println[
-	If[
-		True,
-		"Hello world!",
-		"Goodbye world!"
-	]
-]
-```
-
-Great! We can use side-effects effectively now! (see what I did there)
-
-## Function applications are all or nothing
-
-What I mean is that, unlike in the lambda calculus, either a function can receive all of it's arguments at once, or none of them.
-
-Here's an example.
-
-```fsharp
-func = a.b.c.(
-	Print[a, b, c, "\n"]
-)
-
-main = (
-	func["a", "b"] ["c"]
-)
-```
-
-This code will break.
-
-`func` must be called with _all_ of its arguments at once.
-
-## Static typing
-
-Each function in pink-lang has its own type. A function named `fib` would be of type `fib`, and `collatz` would be of type `collatz`. Because pink-lang is statically typed, It is impossible to have a function that has the potential to return different types during one call.
-
-Here's an example.
-
-```fsharp
-main = (
-	If[
-		True,
-		Print,
-		Println
-	] ["Hello world!"]
-)
-```
-
-# Some cool things about pink-lang
+It has several features, such as:
 
 ## Type inference
 
@@ -109,7 +37,7 @@ class Put : public Function {
 public:
     template<typename A>
     auto call(A a) {
-	cout << a.get_data() << endl; // get data from a and print it
+	cout << a.get_string() << endl; // get data from a and print it
         return a;
     }
 };
