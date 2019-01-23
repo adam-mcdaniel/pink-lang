@@ -44,7 +44,7 @@ public:
 ```
 
 Here's a function that allows for composing any number of functions together!
-```
+```c++
 #include <iostream>
 #include "std/function.cpp"
 #include "std/io.cpp"
