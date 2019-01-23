@@ -198,17 +198,25 @@ If your project's `std` is out of date, you can `git pull`, and `make update pat
 
 # Running pink-lang
 
+### Requirements
+
+Python3, g++ with C++14 support, and make.
+
+### Installing
+
 To run pink-lang, you'll need a python3 installation to freeze the compiler with pyinstaller. Once, you build the compiler for your platform, however, everything else depends on stuff that should come ready with *nix machines: `make` and `g++` with `std=c++14`.
 
-To install pink-lang on a *nix machine _(excluding the python3 installation)_, run this.
+To install pink-lang on a \*nix machine _(excluding the python3 installation)_, run this.
 
 ```bash
 cd ~/Desktop
 git clone https://github.com/adam-mcdaniel/pink-lang # Download pink-lang
 cd pink-lang
 
-make project path="../new_project" # Make new pink-lang project in ~/Desktop/new_project
-make update path="../new_project"  # Update that project's version of std
+make install
+
+./floyd project "../new_project" # Make new pink-lang project in ~/Desktop/new_project
+./floyd update "../new_project"  # Update that project's version of std
 cd ../new_project # Go to the project
 
 ./run # Compile and run the project!
