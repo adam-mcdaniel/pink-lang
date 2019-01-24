@@ -1,0 +1,22 @@
+Include["controlflow.cpp"]
+
+
+Double = n.(
+	Mul[n, 2]
+)
+
+Triple = n.(
+	Mul[n, 3]
+)
+
+
+main = args.(
+	Println[
+		IfElseLazy[
+			True,
+			Double,
+			Triple,
+			10
+		]
+	]
+)
