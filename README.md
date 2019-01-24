@@ -8,7 +8,7 @@ A high level programming language that compiles to native
 
 pink-lang is a (kind of) functional programming language with incredible performance.
 
-Here's how you can use it.
+Here's some of its cool features.
 
 
 ## Type inference
