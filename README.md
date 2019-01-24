@@ -1,7 +1,5 @@
 # pink-lang
 
-(named after pink-floyd)
-
 A high level programming language that compiles to native
 
 
