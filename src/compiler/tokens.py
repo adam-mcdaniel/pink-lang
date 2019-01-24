@@ -100,6 +100,14 @@ TEMPLATES = [
 	"__Y__", "__Z__"
 ]
 
+RESERVED = [
+    "double", "string", "int",
+    "class",  "struct", "exit",
+    "unsigned", "signed", "if",
+    "else", "public", "private",
+    "std", "vector"
+]
+
 
 separators = ["\"", ","] + list(operators.keys())
 
@@ -151,7 +159,10 @@ class Identifier:
     def __init__(self, name):
         self.name = name
         if self.name in TEMPLATES:
-            error("Attempted to use reserved name '", name, "'")
+            error(f"Attempted to use reserved name '{str(name)}'")
+            exit(1)
+        if self.name in RESERVED:
+            error(f"Attempted to use reserved name '{str(name)}'")
             exit(1)
 
     def __eq__(self, a): return str(self) == a
