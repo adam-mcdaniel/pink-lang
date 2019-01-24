@@ -211,7 +211,8 @@ cd ~/Desktop
 git clone https://github.com/adam-mcdaniel/pink-lang # Download pink-lang
 cd pink-lang
 
-make install
+make install # compile project manager
+./repair.sh  # repair all packages in examples directory
 
 ./floyd project "../new_project" # Make new pink-lang project in ~/Desktop/new_project
 ./floyd update "../new_project"  # Update that project's version of std
