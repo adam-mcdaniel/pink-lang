@@ -47,6 +47,7 @@ public:
 
 Here's a function that allows for composing any number of functions together!
 ```c++
+#pragma once
 #include <iostream>
 #include "std/function.cpp"
 #include "std/io.cpp"
@@ -90,8 +91,6 @@ main = your_parameter_name_here.(
 
 Super easy!
 
-And function definitions are straight forward: just a name, an equals sign, the arguments separated by dots, and the function body. The last statement is returned at the end of the function.
-
 ## Program manager
 
 pink-lang's program manager is incredibly easy to use. To create a new project, use `make project path="path/to/new/project"`. This command will generate this structure at the specified path.
@@ -116,7 +115,7 @@ pink-lang's program manager is incredibly easy to use. To create a new project, 
 
 There is no unified system installation of pink-lang, so each project contains all the depencies it will ever need. This makes it very easy to give to someone else to compile, they won't have to install anything extra to compile your program.
 
-If your project's `std` is out of date, you can `git pull`, and `make update path="path/to/project"`.
+If your project's `std` is out of date, you can `git pull`, and `make install; ./floyd update "path/to/project"`.
 
 
 # Running pink-lang
