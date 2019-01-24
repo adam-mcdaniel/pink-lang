@@ -4,11 +4,15 @@
 
 A high level programming language that compiles to native
 
+
 ## What is pink-lang?
 
 pink-lang is a (kind of) functional programming language with incredible performance.
 
-Here's some of its cool features.
+[Learn the syntax](SYNTAX.md)
+[The Standard Library](STD.md)
+
+Here's some of its features.
 
 
 ## Type inference
