@@ -2,7 +2,7 @@
 
 (named after pink-floyd lol)
 
-A (kind of) functional programming language that compiles to native
+A high level programming language that compiles to native
 
 ## What is pink-lang?
 
