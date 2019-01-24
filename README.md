@@ -12,8 +12,9 @@ pink-lang is a (kind of) functional programming language with incredible perform
 ### [Learn the syntax](SYNTAX.md)
 ### [The Standard Library](STD.md)
 
-Here's some of its features.
 
+# Features
+---
 
 ## Type inference
 
