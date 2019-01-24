@@ -1,6 +1,5 @@
-
 main = args.(
 	Println[
-		Index[args, 1]
+		List[1, 2, 3, 4, 5]~Index[0]
 	]
 )

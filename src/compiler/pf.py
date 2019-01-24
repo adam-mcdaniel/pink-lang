@@ -36,6 +36,8 @@ try:
 #include "../include/std/logic.cpp"
 #include "../include/std/object.cpp"
 #include "../include/std/compose.cpp"
+#include "../include/std/file.cpp"
+#include "../include/std/list.cpp"
 using namespace std;\n\n\n
 """ + output + """
 

@@ -12,7 +12,7 @@ using namespace std;
 class None : public Function {
 public:
     None() {
-        this->data = "None";
+        this->set_string("None");
     }
 };
 
@@ -21,8 +21,8 @@ class Pair : public Function {
 public:
     template<typename A, typename B>
     auto call(A a, B b) {
-        this->pair = {a, b};
-        this->data = "(" + a.get_string() + ", " + b.get_string() + ")";
+        this->set_pair({a, b});
+        this->set_string("(" + a.get_string() + ", " + b.get_string() + ")");
         return *this;
     }
 };
@@ -31,7 +31,7 @@ public:
 class String : public Function {
 public:
     String(string data) {
-        this->data = data;
+        this->set_string(data);
     }
 
     template<typename A>
@@ -53,10 +53,10 @@ public:
 class Number : public Function {
 public:
     Number(double number) {
-        this->number = number;
+        this->set_number(number);
         ostringstream strs;
         strs << number;
-        this->data = strs.str();
+        this->set_string(strs.str());
     }
 
     template<typename A>
@@ -151,9 +151,9 @@ public:
     Bool(bool boolean) {
         this->boolean = boolean;
         if (boolean) {
-            this->data = "True";
+            this->set_string("True");
         } else {
-            this->data = "False";
+            this->set_string("False");
         }
     }
 };

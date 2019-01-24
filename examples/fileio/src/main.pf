@@ -1,0 +1,35 @@
+ReadFile = path.(
+	Println[
+		"\"\"\"",
+		File[path]~read[],
+		"\"\"\""
+	]
+	Exit[0]
+)
+
+
+WriteFile = path.content.(
+	File[path]~write[content]
+	Exit[0]
+)
+
+
+main = args.(
+
+	Error[
+		Less[args~len[], 2]
+		"Must supply arguments (read | write) and path to file to read from or write to"
+	]
+
+	If[Eq[args~Index[0], "read"], ReadFile, Pass, args~Index[1]]
+
+
+
+	Error[
+		Less[args~len[], 3]~And[Eq[args~Index[0], "write"]]
+		"Must supply content to write to file"
+	]
+
+	If[Eq[args~Index[0], "write"], WriteFile, Pass, args~Index[1], args~Index[2]]
+	
+)

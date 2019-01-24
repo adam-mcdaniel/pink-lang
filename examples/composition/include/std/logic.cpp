@@ -14,6 +14,15 @@ public:
 };
 
 
+class Pass : public Function {
+public:
+    template<typename... A>
+    auto call(A... a) {
+        return None();
+    }
+};
+
+
 class Eq : public Function {
 public:
     template<typename A, typename B>
@@ -38,9 +47,20 @@ public:
 
 class If : public Function {
 public:
-    template<typename A, typename B, typename C>
-    auto call(A a, B b, C c) {
+    template<typename __A__, typename __B__, typename __C__>
+    auto call(__A__ a, __B__ b, __C__ c) {
         return a.call(b, c);
+    }
+
+    template<typename __A__, typename __B__, typename __C__, typename... Args>
+    auto call(__A__ a, __B__ b, __C__ c, Args... args) {
+        auto result = Pair();
+        if (a.call(True(), False()).get_boolean()) {
+            result.call(b, b.call(args...));
+        } else {
+            result.call(c, c.call(args...));
+        }
+        return result.second();
     }
 };
 
@@ -122,20 +142,6 @@ public:
         return result;
     }
 };
-
-
-class LazyIf : public Function {
-public:
-    template<typename __A__, typename __B__, typename __C__>
-    auto call(__A__ a, __B__ b, __C__ c) {
-        if (a.get_boolean() > 0) {
-            b.call(c);
-        }
-        return c;
-    }
-};
-
-
 
 
 class Error : public Function {

@@ -11,5 +11,5 @@ install:
 	@cp -r src/compiler/include/* ./floyd_manager/include 
 	@echo './pf; ./target/bin' > ./floyd_manager/run
 	@chmod +x ./floyd_manager/run
-	cd floyd_manager; ./pf;
-	mv ./floyd_manager/target/bin ./floyd
+	@cd floyd_manager; ./pf;
+	@mv ./floyd_manager/target/bin ./floyd

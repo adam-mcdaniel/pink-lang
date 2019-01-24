@@ -7,6 +7,8 @@
 #include "../include/std/logic.cpp"
 #include "../include/std/object.cpp"
 #include "../include/std/compose.cpp"
+#include "../include/std/file.cpp"
+#include "../include/std/list.cpp"
 using namespace std;
 
 
@@ -174,7 +176,7 @@ public:
 	template<typename __A__>
 	auto call(__A__ path) {
 		InfoMsg().call(String("Usage: `floyd (update | project | repair) /path/to/project/dir`"));
-		return Exit().call(True(), Number(0));
+		return Exit().call(Number(0));
 	}
 };
 
@@ -185,18 +187,18 @@ public:
 	auto call(__A__ args) {
 		Error().call(And().call(LessEq().call(len().call(args), Number(1)), NotEq().call(Index().call(args, Number(0)), String("help"))), String("Must supply a command and a path"));
 		Error().call(And().call(And().call(And().call(NotEq().call(Index().call(args, Number(0)), String("update")), NotEq().call(Index().call(args, Number(0)), String("project"))), NotEq().call(Index().call(args, Number(0)), String("repair"))), NotEq().call(Index().call(args, Number(0)), String("help"))), Concat().call(Concat().call(String("Invalid command '"), Index().call(args, Number(0))), String("'")));
-		LazyIf().call(Eq().call(Index().call(args, Number(0)), String("help")), help(), None());
+		If().call(Eq().call(Index().call(args, Number(0)), String("help")), help(), Pass(), None());
 		InfoMsg().call(String("Starting Floyd Package Manager"));
 		mem::let().call(String("name"), Index().call(args, Number(1)));
 		mem::let().call(String("os"), os::get_system().call(None()));
 		mem::let().call(String("is_posix"), NotEq().call(os::get_system().call(None()), String("Windows")));
 		InfoMsg().call(Concat().call(Concat().call(String("You are "), If().call(mem::get().call(String("is_posix")), String(""), String("not "))), String("using a posix compatible system")));
-		LazyIf().call(Eq().call(Index().call(args, Number(0)), String("update")), update(), mem::get().call(String("name")));
-		LazyIf().call(Eq().call(Index().call(args, Number(0)), String("update")), InfoMsg(), String("Project successfully upgraded"));
-		LazyIf().call(Eq().call(Index().call(args, Number(0)), String("project")), project(), mem::get().call(String("name")));
-		LazyIf().call(Eq().call(Index().call(args, Number(0)), String("project")), InfoMsg(), String("Project successfully created"));
-		LazyIf().call(Eq().call(Index().call(args, Number(0)), String("repair")), repair(), mem::get().call(String("name")));
-		return LazyIf().call(Eq().call(Index().call(args, Number(0)), String("repair")), InfoMsg(), String("Project successfully repaired"));
+		If().call(Eq().call(Index().call(args, Number(0)), String("update")), update(), Pass(), mem::get().call(String("name")));
+		If().call(Eq().call(Index().call(args, Number(0)), String("update")), InfoMsg(), Pass(), String("Project successfully upgraded"));
+		If().call(Eq().call(Index().call(args, Number(0)), String("project")), project(), Pass(), mem::get().call(String("name")));
+		If().call(Eq().call(Index().call(args, Number(0)), String("project")), InfoMsg(), Pass(), String("Project successfully created"));
+		If().call(Eq().call(Index().call(args, Number(0)), String("repair")), repair(), Pass(), mem::get().call(String("name")));
+		return If().call(Eq().call(Index().call(args, Number(0)), String("repair")), InfoMsg(), Pass(), String("Project successfully repaired"));
 	}
 };
 

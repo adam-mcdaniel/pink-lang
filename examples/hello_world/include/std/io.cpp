@@ -95,6 +95,12 @@ public:
 
 class Exit : public Function {
 public:
+    template<typename A>
+    auto call(A a) {
+        exit(a.get_number());
+        return None();
+    }
+
     template<typename A, typename B>
     auto call(A a, B b) {
         if (a.get_boolean()) {

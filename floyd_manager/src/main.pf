@@ -65,7 +65,7 @@ repair = path.(
 
 help = path.(
 	InfoMsg["Usage: `floyd (update | project | repair) /path/to/project/dir`"]
-	Exit[True, 0]
+	Exit[0]
 )
 
 
@@ -81,7 +81,7 @@ main = args.(
 		~And[args~Index[0]~NotEq["help"]]
 		~Error["Invalid command '"~Concat[args~Index[0]]~Concat["'"]]
 
-	LazyIf[args~Index[0]~Eq["help"], help, None]
+	If[args~Index[0]~Eq["help"], help, Pass, None]
 
 	InfoMsg["Starting Floyd Package Manager"]
 
@@ -99,12 +99,12 @@ main = args.(
 	]
 
 
-	LazyIf[args~Index[0]~Eq["update"], update, mem::get["name"]]
-	LazyIf[args~Index[0]~Eq["update"], InfoMsg, "Project successfully upgraded"]
+	If[args~Index[0]~Eq["update"], update, Pass, mem::get["name"]]
+	If[args~Index[0]~Eq["update"], InfoMsg, Pass, "Project successfully upgraded"]
 
-	LazyIf[args~Index[0]~Eq["project"], project, mem::get["name"]]
-	LazyIf[args~Index[0]~Eq["project"], InfoMsg, "Project successfully created"]
+	If[args~Index[0]~Eq["project"], project, Pass, mem::get["name"]]
+	If[args~Index[0]~Eq["project"], InfoMsg, Pass, "Project successfully created"]
 
-	LazyIf[args~Index[0]~Eq["repair"], repair, mem::get["name"]]
-	LazyIf[args~Index[0]~Eq["repair"], InfoMsg, "Project successfully repaired"]
+	If[args~Index[0]~Eq["repair"], repair, Pass, mem::get["name"]]
+	If[args~Index[0]~Eq["repair"], InfoMsg, Pass, "Project successfully repaired"]
 )
