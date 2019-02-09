@@ -113,7 +113,7 @@ pink-lang's program manager is incredibly easy to use. To create a new project, 
 └── target
 ```
 
-`pf` is the pink-lang compiler and run is a bash script that compiles and runs your program. Your pink-lang code is stored in the `src` directory. Any C++ file that you want to use in your program goes into the `include` directory, but not under `include/std`!
+`pf` is the pink-lang compiler and `run` is a bash script that compiles and runs your program. Your pink-lang code is stored in the `src` directory. Any C++ file that you want to use in your program goes into the `include` directory, but not under `include/std`!
 
 There is no unified system installation of pink-lang, so each project contains all the depencies it will ever need. This makes it very easy to give to someone else to compile, they won't have to install anything extra to compile your program.
 
