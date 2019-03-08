@@ -135,7 +135,7 @@ cd ~/Desktop
 git clone https://github.com/adam-mcdaniel/pink-lang # Download pink-lang
 cd pink-lang
 
-make install # compile project manager
+make install -i # compile project manager
 ./repair.sh  # repair all packages in examples directory
 
 ./floyd project "../new_project" # Make new pink-lang project in ~/Desktop/new_project
