@@ -9,7 +9,7 @@
 
 truth_machine = input.(
 	Break[
-		Eq[input, "0"]
+		Eq[input, "0"],
 		input
 	]
 	Println[input]
