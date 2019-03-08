@@ -100,16 +100,20 @@ pink-lang's program manager is incredibly easy to use. To create a new project, 
 ```
 .
 ├── include
-│   └── std
-│       ├── data.cpp
-│       ├── error.cpp
-│       ├── function.cpp
-│       ├── io.cpp
-│       └── logic.cpp
+│   └── std
+│       ├── compose.cpp
+│       ├── data.cpp
+│       ├── error.cpp
+│       ├── file.cpp
+│       ├── function.cpp
+│       ├── io.cpp
+│       ├── list.cpp
+│       ├── logic.cpp
+│       └── object.cpp
 ├── pf
 ├── run
 ├── src
-│   └── main.pf
+│   └── main.pf
 └── target
 ```
 
