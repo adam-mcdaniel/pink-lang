@@ -84,11 +84,11 @@ public:
     auto call(__A__ a, __B__ b) {
         auto result = a.call(b);
         while (true) {
-            result = a.call(result);
             if (BROKEN) {
                 BROKEN = false;
                 break;
             }
+            result = a.call(result);
         }
         return result;
     }

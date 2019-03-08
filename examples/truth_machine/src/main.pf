@@ -1,0 +1,20 @@
+; Ask for input.
+; If the input is 0:
+;         Output 0.
+;         Terminate program.
+; Whereas if the input is 1:
+;         Repeat infinitely:
+;         Output 1.
+
+
+truth_machine = input.(
+	Break[
+		Eq[input, "0"]
+		input
+	]
+	Println[input]
+)
+
+main = args.(
+	Loop[truth_machine, Input["> "]]
+)

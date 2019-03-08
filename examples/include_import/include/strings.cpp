@@ -7,7 +7,7 @@
 using namespace std;
 
 
-class IndexStr : public Function {
+struct IndexStr : public Function {
     template<typename A, typename B>
     auto call(A a, B b) {
         int n = b.get_number();
@@ -18,7 +18,7 @@ class IndexStr : public Function {
 };
 
 
-class LenStr : public Function {
+struct LenStr : public Function {
     template<typename A>
     auto call(A a) {
         return Number(a.get_string().length());

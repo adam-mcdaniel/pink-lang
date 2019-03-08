@@ -15,5 +15,5 @@ print_index = n.(
 
 
 main = args.(
-	For[8, print_index, 0]
+	For[7, print_index, 0]
 )

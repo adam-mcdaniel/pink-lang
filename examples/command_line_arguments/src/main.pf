@@ -1,4 +1,4 @@
-index = p.n.(
+index_ = p.n.(
     Error[
         GreaterEq[n, len[p]],
         "First argument must be less than or equal to the number of arguments"
@@ -14,9 +14,9 @@ main = args.(
     ]
 
     Error[
-        Not[IsNumber[index[args, 0]]],
+        Not[IsNumber[index_[args, 0]]],
         "First argument must be number"
     ]
 
-    Println[index[args, StrToNum[index[args, 0]]]]
+    Println[index_[args, StrToNum[index_[args, 0]]]]
 )
